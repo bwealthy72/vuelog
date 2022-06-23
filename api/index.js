@@ -1,23 +1,34 @@
-import * as notion from "./utils/notion";
-
-const databaseId = process.env.NOTION_DATABASE_ID;
+import mongo from "./utils/mongo";
 
 const app = require("express")();
 
 app.get("/posts", async (req, res) => {
-  const data = await notion.queryDatabase(
-    databaseId,
-    req.query.pageSize,
-    req.query.hasMore,
-    req.query.startCursor,
-    req.query.category
+  await mongo.connect();
+
+  const posts = await mongo.getPosts(
+    req.query.category,
+    parseInt(req.query.pageSize)
   );
-  res.json(data);
+
+  mongo.disconnect();
+
+  res.json(posts);
+});
+
+app.get("/posts/next", async (req, res) => {
+  await mongo.connect();
+
+  const posts = await mongo.addPosts();
+  mongo.disconnect();
+  res.json(posts);
 });
 
 app.get("/post", async (req, res) => {
-  const data = await notion.retrievePage(req.query.id);
-  res.json(data);
+  await mongo.connect();
+
+  const post = await mongo.getPost(req.query.id);
+  mongo.disconnect();
+  res.json(post);
 });
 
 module.exports = app;

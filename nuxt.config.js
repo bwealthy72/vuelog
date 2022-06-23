@@ -20,7 +20,7 @@ export default {
     ],
   },
 
-  serverMiddleware: [{ path: "/api", handler: "~/api/index.js" }],
+  serverMiddleware: [{ path: "/api", handler: __dirname + "/api/index.js" }],
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
@@ -44,7 +44,16 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  // env: {
+  //   baseUrl: process.env.VERCEL_URL || "http://127.0.0.1:3000",
+  // },
+  axios: {
+    proxy: true, // Can be also an object with default options
+  },
+
+  proxy: {
+    "/api": process.env.VERCEL_URL,
+  },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},

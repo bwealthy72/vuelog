@@ -1,19 +1,15 @@
 <template>
   <div>
-    <li v-for="p of postList" :key="p.id" @click="getPost(p.id)">
-      {{ p.properties.title.title[0].text.content }}
+    <li v-for="p of postList" :key="p.id" @click="getPost(p.pid)">
+      {{ p.title }}
     </li>
     <div>
       <button @click="fetchPosts('HTML')">fetch html</button>
       <button @click="fetchPosts('CSS')">fetch CSS</button>
-      <button @click="addPosts()">more</button>
+      <button @click="addPosts('HTML')">HTML more</button>
+      <button @click="addPosts('CSS')">CSS more</button>
     </div>
     <div v-html="post.body"></div>
-    <h2>
-      <del
-        ><i><u>Heading</u></i></del
-      >
-    </h2>
   </div>
 </template>
 
@@ -21,23 +17,27 @@
 import { mapState } from "vuex";
 export default {
   computed: {
-    ...mapState("notion", ["postList", "post"]),
+    ...mapState("post", ["postList", "post"]),
   },
 
   methods: {
     async getPost(id) {
-      await this.$store.dispatch("notion/getPost", id);
+      await this.$store.dispatch("post/getPost", id);
     },
     async addPosts() {
-      await this.$store.dispatch("notion/addPosts");
+      await this.$store.dispatch("post/addPosts");
     },
     async fetchPosts(category) {
-      await this.$store.dispatch("notion/fetchPosts", category);
+      await this.$store.dispatch("post/fetchPosts", category);
     },
   },
 
-  async fetch() {
-    await this.fetchPosts("HTML");
+  async asyncData(ctx) {
+    await ctx.store.dispatch("post/fetchPosts");
+    await ctx.store.dispatch(
+      "post/getPost",
+      "b0d11475-5d77-41ce-ad5c-0687e18aa9c6"
+    );
   },
 };
 </script>
