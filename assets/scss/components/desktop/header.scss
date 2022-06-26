@@ -1,0 +1,24 @@
+.desktop-header {
+  height: $header-height;
+  background-color: $header-bg-color;
+
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  font-size: 1.3rem;
+  color: white;
+
+  &__logo {
+    height: 60%;
+  }
+
+  &__title {
+    margin-left: $header-gap;
+    font-weight: bold;
+  }
+
+  &__clock {
+    margin-left: 1rem;
+    font-weight: bold;
+  }
+}

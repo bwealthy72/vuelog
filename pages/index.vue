@@ -1,16 +1,5 @@
 <template>
-  <div>
-    <li v-for="p of postList" :key="p.id" @click="getPost(p.pid)">
-      {{ p.title }}
-    </li>
-    <div>
-      <button @click="fetchPosts('HTML')">fetch html</button>
-      <button @click="fetchPosts('CSS')">fetch CSS</button>
-      <button @click="addPosts('HTML')">HTML more</button>
-      <button @click="addPosts('CSS')">CSS more</button>
-    </div>
-    <div v-html="post.body"></div>
-  </div>
+  <div class="windows"></div>
 </template>
 
 <script>

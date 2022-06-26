@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <DesktopDock />
+    <DesktopHeader />
     <Nuxt />
   </div>
 </template>
@@ -13,5 +15,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

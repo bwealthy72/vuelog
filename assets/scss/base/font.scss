@@ -1,0 +1,25 @@
+@font-face {
+  font-family: "MapleStory";
+  src: url("~/assets/fonts/Maplestory Light.ttf") format("woff"),
+    url("~/assets/fonts/Maplestory Light.ttf") format("woff2");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "MapleStory";
+  src: url("~/assets/fonts/Maplestory Bold.ttf") format("woff"),
+    url("~/assets/fonts/Maplestory Bold.ttf") format("woff2");
+  font-weight: bold;
+}
+
+html,
+body {
+  font-size: 10px;
+}
+
+html,
+body,
+button,
+input {
+  font-family: "MapleStory", sans-serif;
+}

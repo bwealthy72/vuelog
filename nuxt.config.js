@@ -1,15 +1,62 @@
 export default {
+  server: {
+    host: "0", // default: localhost
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "vuelog",
+    title: "My VueLog",
     htmlAttrs: {
-      lang: "en",
+      lang: "ko",
     },
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: "" },
       { name: "format-detection", content: "telephone=no" },
+
+      { hid: "og:title", property: "og:title", content: "My VueLog" },
+      {
+        hid: "twitter:title",
+        name: "twitter:title",
+        content: "My VueLog",
+      },
+      { hid: "og:type", property: "og:type", content: "website" },
+      {
+        hid: "og:image",
+        property: "og:image",
+        content: "/logo.png",
+      },
+      {
+        hid: "twitter:image",
+        name: "twitter:image",
+        content: "/logo.png",
+      },
+      {
+        hid: "og:url",
+        property: "og:url",
+        content: process.env.VERCEL_URL,
+      },
+      {
+        hid: "description",
+        name: "description",
+        content: "Welcome to my VueLog!!",
+      },
+      {
+        hid: "og:description",
+        property: "og:description",
+        content: "Welcome to my VueLog!!",
+      },
+      {
+        hid: "twitter:description",
+        name: "twitter:description",
+        content: "Welcome to my VueLog!!",
+      },
+      {
+        hid: "twitter:card",
+        name: "twitter:card",
+        content: "summary_large_image",
+      },
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
@@ -23,19 +70,16 @@ export default {
   serverMiddleware: [{ path: "/api", handler: __dirname + "/api/index.js" }],
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
-
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
-
-  // https://nuxtjs.org/docs/configuration-glossary/configuration-loading/
-  loading: "~/components/Loading.vue",
+  css: ["~/assets/scss/index.scss"],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [],
+  buildModules: ["@nuxtjs/moment"],
+  moment: {
+    locales: ["ko"],
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -54,9 +98,6 @@ export default {
   proxy: {
     "/api": process.env.VERCEL_URL,
   },
-
-  // Content module configuration: https://go.nuxtjs.dev/config-content
-  content: {},
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

@@ -1,0 +1,27 @@
+.header-icon {
+  position: relative;
+  height: 100%;
+  padding: 0.3rem 0;
+  margin: 0 -0.2rem;
+  box-sizing: border-box;
+
+  &__menu {
+    height: 100%;
+    padding: 0 1.2rem;
+    border-radius: 4px;
+    &.active {
+      background-color: #ffffff23;
+    }
+
+    img {
+      height: 60%;
+      vertical-align: middle;
+    }
+  }
+
+  &__body {
+    position: absolute;
+    top: 100%;
+    right: 0;
+  }
+}

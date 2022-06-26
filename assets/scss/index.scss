@@ -1,0 +1,13 @@
+@import "base/reset.scss";
+@import "base/variable.scss";
+@import "base/font.scss";
+@import "base/mixins.scss";
+@import "base/base.scss";
+
+@import "components/desktop/dock.scss";
+@import "components/desktop/header.scss";
+@import "components/desktop/header/icon.scss";
+@import "components/desktop/header/iconlist.scss";
+@import "components/desktop/header/icons/music_player.scss";
+
+@import "page/index.scss";

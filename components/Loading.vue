@@ -14,7 +14,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .loading-page {
   position: fixed;
   top: 0;
@@ -27,14 +27,16 @@ export default {
   align-items: center;
   backdrop-filter: blur(4px);
   background-color: rgba(0, 0, 0, 0.2);
-}
-.loading-page img {
-  width: 60px;
-}
-.loading-page p {
-  font-size: 25px;
-  font-weight: bold;
-  color: white;
-  margin: 5px;
+
+  img {
+    width: 60px;
+  }
+
+  p {
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    margin: 5px;
+  }
 }
 </style>

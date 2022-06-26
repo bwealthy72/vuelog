@@ -1,0 +1,23 @@
+$header-height: 3rem;
+$header-bg-color: #162338a3;
+$header-gap: 2rem;
+
+// $dock-width: 40px;
+// $dock-w-pad: 5px;
+// $dock-margin-left: 10px;
+// $dock-max-width: 100px;
+// $dock-bg-color: #17263d88;
+// $dock-z-index: 10000000;
+
+// $window-head-height: 50px;
+
+:export {
+  headerHeight: $header-height;
+
+  // dockWidth: $dock-width;
+  // dockMarginLeft: $dock-margin-left;
+  // dockWPad: $dock-w-pad;
+  // dockMaxWidth: $dock-max-width;
+
+  // windowHeadHeight: $window-head-height;
+}

@@ -1,0 +1,21 @@
+.site-dock {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  width: 40px;
+  z-index: 10000000;
+  background-color: rgba(23, 38, 61, 0.5333333333);
+  box-shadow: 1px 1px 4px #888;
+  border-radius: 1.4rem;
+  padding: 1rem 0.5rem;
+  cursor: default;
+
+  &__item {
+  }
+
+  &__name {
+  }
+}
