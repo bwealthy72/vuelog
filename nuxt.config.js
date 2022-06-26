@@ -81,6 +81,8 @@ export default {
     locales: ["ko"],
   },
 
+  plugins: ["~/plugins/utils.js"],
+
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/content

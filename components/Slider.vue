@@ -1,13 +1,25 @@
 <template>
-  <div class="slider" @mousedown="startControl">
+  <div
+    class="slider"
+    @mousedown="startControl"
+    :style="{ height, borderRadius }"
+  >
     <div class="slider__img" @click="toMin">
       <slot name="preImg"></slot>
     </div>
-    <div class="slider__bar" ref="bar">
-      <div class="currbar" :style="{ width: value + '%' }"></div>
+    <div class="slider__bar" ref="bar" :style="{ borderRadius }">
+      <div
+        class="currbar"
+        :style="{ width: value + '%', borderRadius }"
+        :class="{ active: updating }"
+      ></div>
       <div
         class="currdot"
-        :style="{ left: value + '%' }"
+        :style="{
+          left: value + '%',
+          width: size * 3 + 'px',
+          height: size * 3 + 'px',
+        }"
         :class="{ active: updating }"
       ></div>
     </div>
@@ -33,12 +45,24 @@ export default {
       type: Number,
       default: 100,
     },
+    size: {
+      type: Number,
+      default: 4,
+    },
   },
   data() {
     return {
       timer: null, // for throttling
       updating: false,
     };
+  },
+  computed: {
+    height() {
+      return this.size + "px";
+    },
+    borderRadius() {
+      return this.size + "px";
+    },
   },
   methods: {
     toMin() {
@@ -92,12 +116,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$height: 4px;
 .slider {
   position: relative;
   width: 100%;
-  height: $height;
-  border-radius: $height;
   display: flex;
   align-items: center;
 
@@ -105,35 +126,30 @@ $height: 4px;
     position: relative;
     height: 100%;
     width: 100%;
-    border-radius: $height;
     background-color: darkgray;
 
     .currbar {
       height: 100%;
-      border-radius: $height;
       background-color: white;
+      &.active {
+        background-color: rgb(255, 113, 93);
+      }
     }
     .currdot {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: calc($height * 3);
-      height: calc($height * 3);
-
       border-radius: 50%;
       background-color: white;
-
-      transition: width 0.5s, height 0.5s;
       &.active {
-        width: calc($height * 6);
-        height: calc($height * 6);
+        background-color: rgb(255, 113, 93);
       }
     }
   }
 
   &__img {
-    height: 300%;
+    height: 500%;
     display: flex;
     align-items: center;
     filter: brightness(0.7);

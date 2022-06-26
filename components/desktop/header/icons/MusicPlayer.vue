@@ -2,10 +2,16 @@
   <div class="music-player">
     <img class="music-player__bg" :src="musics[mIdx].image" />
     <div class="music-player__info">
-      <div class="image">
+      <div class="image" :class="{ playing: isPlaying }">
         <img :src="musics[mIdx].image" />
       </div>
-      <h2 class="title">{{ musics[mIdx].title }}</h2>
+      <h2 class="title">
+        <div class="title__texts" :class="{ playing: isPlaying && isTextLong }">
+          <!-- 글자 무한 반복을 위해 두 개로 만듦 -->
+          <span>{{ musics[mIdx].title }}</span>
+          <span v-show="isTextLong">{{ musics[mIdx].title }}</span>
+        </div>
+      </h2>
       <p class="artist">{{ musics[mIdx].artist }}</p>
     </div>
 
@@ -38,7 +44,7 @@
       </button>
     </div>
 
-    <Slider class="music-player__volume" v-model="volume">
+    <Slider class="music-player__volume" v-model="volume" :size="3">
       <img src="~/assets/images/audio/mute.svg" alt="mute" slot="preImg" />
       <img
         src="~/assets/images/audio/fullsound.svg"
@@ -75,6 +81,11 @@ export default {
       totalTime: "00:00",
       isPlaying: false,
     };
+  },
+  computed: {
+    isTextLong() {
+      return this.musics[this.mIdx].src.length > 16;
+    },
   },
   watch: {
     src(v) {

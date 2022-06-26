@@ -5,17 +5,35 @@
   top: 50%;
   left: 10px;
   transform: translateY(-50%);
-  width: 40px;
-  z-index: 10000000;
+  width: $dock-width;
+  z-index: 100;
   background-color: rgba(23, 38, 61, 0.5333333333);
   box-shadow: 1px 1px 4px #888;
   border-radius: 1.4rem;
-  padding: 1rem 0.5rem;
+  padding: 1.2rem 0.6rem;
   cursor: default;
 
   &__item {
-  }
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.7rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
 
-  &__name {
+    img {
+      filter: drop-shadow(2px 2px 2px #000);
+      border-radius: 10px;
+    }
+
+    p {
+      margin-left: 1.8rem;
+      color: #fff;
+      font-size: 1.5rem;
+      background-color: rgba(23, 38, 61, 0.5333333333);
+      padding: 0.5em 0.7em;
+      border-radius: 5px;
+      box-shadow: 0 0 1px 1px #5d5d5d;
+    }
   }
 }
