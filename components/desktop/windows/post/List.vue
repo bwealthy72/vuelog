@@ -3,7 +3,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  async fetch() {
+    await this.$store.dispatch("notion/fetchPosts");
+  },
+};
 </script>
 
 <style></style>

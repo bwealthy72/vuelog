@@ -13,14 +13,6 @@ import List from "~/components/desktop/windows/post/List";
 import Content from "~/components/desktop/windows/post/Content";
 export default {
   components: { Category, List, Content },
-  async fetch() {
-    await this.$store.dispatch("notion/fetchPosts");
-    await this.$store.dispatch(
-      "notion/getPost",
-      this.$store.state.notion.posts[0].pid
-    );
-    await this.$store.dispatch("notion/getCategories");
-  },
 };
 // import { mapState } from "vuex";
 // export default {

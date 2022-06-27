@@ -4,12 +4,12 @@ $header-gap: 2rem;
 
 $dock-width: 40px;
 
-// $window-head-height: 50px;
+$window-head-height: 50px;
 
 :export {
   headerHeight: $header-height;
 
   dockWidth: $dock-width;
 
-  // windowHeadHeight: $window-head-height;
+  windowHeadHeight: $window-head-height;
 }

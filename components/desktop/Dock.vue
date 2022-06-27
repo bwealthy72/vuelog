@@ -2,7 +2,7 @@
   <nav class="site-dock" @mousemove="onMouseMove" @mouseleave="onMouseLeave">
     <button class="site-dock__item" v-for="app of apps" :key="app.name">
       <img
-        :style="{ width: app.width + 'px' }"
+        :style="{ 'min-width': app.width + 'px' }"
         :src="app.img"
         :alt="app.name"
         ref="imgs"
@@ -28,7 +28,7 @@ export default {
       ],
       aniID: null,
       minWidth: 0,
-      speed: 0.08, // 0 ~ 1
+      speed: 0.06, // 0 ~ 1
       moveTimer: null, // for throttling
       leaveTimer: null, // for
     };

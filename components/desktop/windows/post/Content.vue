@@ -3,7 +3,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  async fetch() {
+    await this.$store.dispatch(
+      "notion/getPost",
+      this.$store.state.notion.posts[0].pid
+    );
+  },
+};
 </script>
 
 <style></style>
