@@ -11,12 +11,12 @@ export default {
   pageNum: 5,
   category: null,
 
-  async connect() {
+  async connect(db, collection) {
     // Connect to cluster
     this.client = new MongoClient(process.env.MONGODB_URI, {});
     await this.client.connect();
-    this.db = this.client.db(process.env.MONGODB_DB);
-    this.collection = this.db.collection(process.env.MONGODB_COLLECTION);
+    this.db = this.client.db(db);
+    this.collection = this.db.collection(collection);
   },
   disconnect() {
     this.client.close();
@@ -35,7 +35,7 @@ export default {
   async addPosts() {
     const cursor = await this.collection
       .find(this.category ? { category: { $eq: this.category } } : null)
-      .project({ body: 0 })
+      .project({ body: 0, _id: 0 })
       .skip(++this.currPage * this.pageNum)
       .limit(this.pageNum);
 
@@ -43,5 +43,13 @@ export default {
   },
   async getPost(pid) {
     return await this.collection.findOne({ pid });
+  },
+  async getCategories() {
+    const cursor = await this.collection.find().project({ _id: 0 });
+    return cursor.toArray();
+  },
+  async getMusics() {
+    const cursor = await this.collection.find().project({ _id: 0 });
+    return cursor.toArray();
   },
 };

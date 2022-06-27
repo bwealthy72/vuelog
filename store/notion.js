@@ -1,22 +1,30 @@
 export const state = () => ({
-  postList: [],
+  posts: [],
   post: {},
   pageSize: 5,
   category: "",
+  categories: [],
+  musics: [],
 });
 
 export const mutations = {
   setPost(state, post) {
     state.post = post;
   },
-  setPostList(state, postList) {
-    state.postList = postList;
+  setPosts(state, posts) {
+    state.posts = posts;
   },
-  addPostList(state, postList) {
-    state.postList = state.postList.concat(postList);
+  addPosts(state, posts) {
+    state.posts = state.posts.concat(posts);
   },
   setCategory(state, category) {
     state.category = category;
+  },
+  setCategories(state, categories) {
+    state.categories = categories;
+  },
+  setMusics(state, musics) {
+    state.musics = musics;
   },
 };
 
@@ -29,7 +37,7 @@ export const actions = {
       },
     });
 
-    commit("setPostList", data);
+    commit("setPosts", data);
     commit("setCategory", category);
   },
   async addPosts({ state, commit }) {
@@ -40,7 +48,7 @@ export const actions = {
       },
     });
 
-    commit("addPostList", data);
+    commit("addPosts", data);
   },
 
   async getPost({ commit }, id) {
@@ -51,5 +59,17 @@ export const actions = {
     });
 
     commit("setPost", data);
+  },
+
+  async getCategories({ commit }, id) {
+    const data = await this.$axios.$get("/api/categories");
+
+    commit("setCategories", data);
+  },
+
+  async getMusics({ commit }, id) {
+    const data = await this.$axios.$get("/api/musics");
+
+    commit("setMusics", data);
   },
 };

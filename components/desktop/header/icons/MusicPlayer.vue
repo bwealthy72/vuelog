@@ -56,25 +56,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
       track: 0,
       volume: 10,
-      musics: [
-        {
-          title: "별의 다과회 (星茶会)",
-          artist: "Kuroba",
-          src: "/audio/별의다과회.mp3",
-          image: require("~/static/audio/img/별의다과회.png"),
-        },
-        {
-          title: "Flowering (너로피어오라)",
-          artist: "릴파 (Lilpa)",
-          src: "/audio/너로피어오라.mp3",
-          image: require("~/static/audio/img/너로피어오라.jpeg"),
-        },
-      ],
       mIdx: 0,
       audio: null,
       currTime: "00:00",
@@ -83,6 +70,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("notion", ["musics"]),
     isTextLong() {
       return this.musics[this.mIdx].src.length > 16;
     },
@@ -138,6 +126,9 @@ export default {
     trackChange() {
       this.audio.currentTime = (this.audio.duration * this.track) / 100;
     },
+  },
+  async fetch() {
+    await this.$store.dispatch("notion/getMusics");
   },
   mounted() {
     this.audio = new Audio(this.musics[this.mIdx].src);

@@ -1,5 +1,5 @@
 export const state = () => ({
-  activatedItem: "musicPlayer",
+  activatedItem: null,
 });
 
 export const mutations = {
