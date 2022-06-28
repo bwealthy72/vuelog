@@ -18,8 +18,8 @@ export default {
     this.db = this.client.db(db);
     this.collection = this.db.collection(collection);
   },
-  disconnect() {
-    this.client.close();
+  async disconnect() {
+    await this.client.close();
   },
   async getPosts(category, pageNum) {
     const cursor = await this.collection

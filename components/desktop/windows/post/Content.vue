@@ -4,12 +4,12 @@
 
 <script>
 export default {
-  async fetch() {
-    await this.$store.dispatch(
-      "notion/getPost",
-      this.$store.state.notion.posts[0].pid
-    );
-  },
+  // async fetch() {
+  //   await this.$store.dispatch(
+  //     "notion/getPost",
+  //     this.$store.state.notion.posts[0].pid
+  //   );
+  // },
 };
 </script>
 

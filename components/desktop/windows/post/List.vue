@@ -4,9 +4,9 @@
 
 <script>
 export default {
-  async fetch() {
-    await this.$store.dispatch("notion/fetchPosts");
-  },
+  // async fetch() {
+  //   await this.$store.dispatch("notion/fetchPosts");
+  // },
 };
 </script>
 

@@ -13,10 +13,10 @@ export default {
   data() {
     return {
       icons: {
-        musicPlayer: {
-          img: require("~/assets/images/audio/music.png"),
-          component: "MusicPlayer",
-        },
+        // musicPlayer: {
+        //   img: require("~/assets/images/audio/music.png"),
+        //   component: "MusicPlayer",
+        // },
       },
     };
   },

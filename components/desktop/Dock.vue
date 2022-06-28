@@ -8,6 +8,7 @@
         ref="imgs"
         @mousemove="app.active = true"
         @mouseleave="app.active = false"
+        @click="$store.dispatch('window/open', app.name)"
       />
       <p v-show="app.active">{{ app.name }}</p>
     </button>

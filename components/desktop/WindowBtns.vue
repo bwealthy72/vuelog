@@ -48,6 +48,7 @@
   justify-content: space-between;
   align-items: center;
   width: 5.5rem;
+  z-index: 100;
 
   &:hover {
     .main {
@@ -64,7 +65,6 @@
     height: 1.2rem;
     display: flex;
     background-size: contain;
-    cursor: default;
 
     img {
       width: 100%;

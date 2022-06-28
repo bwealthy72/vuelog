@@ -1,9 +1,8 @@
 <template>
   <main class="post-wrapper">
     <Category />
-    <List />
-    <Content />
-    <div v-html="$store.state.notion.post.body"></div>
+    <!-- <List />
+    <Content /> -->
   </main>
 </template>
 

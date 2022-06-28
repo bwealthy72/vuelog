@@ -3,14 +3,14 @@
   flex-direction: column;
   position: fixed;
   top: 50%;
-  left: 10px;
+  left: $dock-margin-left;
   transform: translateY(-50%);
   width: $dock-width;
-  z-index: 100;
+  z-index: 100000;
   background-color: rgba(23, 38, 61, 0.5333333333);
   box-shadow: 1px 1px 4px #888;
   border-radius: 1.4rem;
-  padding: 1.2rem 0.6rem;
+  padding: 1.2rem $dock-pad;
   cursor: default;
 
   &__item {

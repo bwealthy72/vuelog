@@ -1,15 +1,19 @@
 $header-height: 3rem;
-$header-bg-color: #162338a3;
+$header-bg-color: #060c1547;
 $header-gap: 2rem;
 
 $dock-width: 40px;
+$dock-pad: 6px;
+$dock-margin-left: 10px;
 
-$window-head-height: 50px;
+$window-header-height: 50px;
 
 :export {
   headerHeight: $header-height;
 
   dockWidth: $dock-width;
+  dockPad: $dock-pad;
+  dockMarginLeft: $dock-margin-left;
 
-  windowHeadHeight: $window-head-height;
+  windowHeaderHeight: $window-header-height;
 }

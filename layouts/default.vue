@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <video autoplay muted loop width="100%" class="bg">
+    <video autoplay muted loop class="bg">
       <source src="~/assets/images/bg.webm" type="video/webm" />
     </video>
 
     <DesktopDock />
     <DesktopHeader />
-    <!-- <Nuxt /> -->
+    <Nuxt />
   </div>
 </template>
 

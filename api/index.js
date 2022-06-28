@@ -1,3 +1,4 @@
+import { Db } from "mongodb";
 import mongo from "./utils/mongo";
 
 const app = require("express")();
@@ -10,7 +11,7 @@ app.get("/posts", async (req, res) => {
     parseInt(req.query.pageSize)
   );
 
-  mongo.disconnect();
+  await mongo.disconnect();
 
   res.json(posts);
 });
@@ -19,7 +20,7 @@ app.get("/posts/next", async (req, res) => {
   await mongo.connect("notion", "posts");
 
   const posts = await mongo.addPosts();
-  mongo.disconnect();
+  await mongo.disconnect();
   res.json(posts);
 });
 
@@ -27,7 +28,7 @@ app.get("/post", async (req, res) => {
   await mongo.connect("notion", "posts");
 
   const post = await mongo.getPost(req.query.id);
-  mongo.disconnect();
+  await mongo.disconnect();
   res.json(post);
 });
 
