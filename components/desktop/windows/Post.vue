@@ -1,8 +1,8 @@
 <template>
   <main class="post-wrapper">
     <Category />
-    <!-- <List />
-    <Content /> -->
+    <List />
+    <Content />
   </main>
 </template>
 
@@ -10,25 +10,27 @@
 import Category from "~/components/desktop/windows/post/Category";
 import List from "~/components/desktop/windows/post/List";
 import Content from "~/components/desktop/windows/post/Content";
+import { mapState } from "vuex";
+
 export default {
   components: { Category, List, Content },
-};
-// import { mapState } from "vuex";
-// export default {
-//   computed: {
-//     ...mapState("notion", ["posts", "post"]),
-//   },
+  computed: {
+    ...mapState("notion", ["posts", "post"]),
+  },
 
-//   methods: {
-//     async getPost(id) {
-//       await this.$store.dispatch("notion/getPost", id);
-//     },
-//     async addPosts() {
-//       await this.$store.dispatch("notion/addPosts");
-//     },
-//     async fetchPosts(category) {
-//       await this.$store.dispatch("notion/fetchPosts", category);
-//     },
-//   },
-// };
+  async fetch() {
+    let category = this.$route.params.category;
+    if (!category) category = "";
+
+    await this.$store.dispatch("notion/getPosts", category);
+    if (this.$route.params.id) {
+      await this.$store.dispatch("notion/getPost", this.$route.params.id);
+    } else {
+      await this.$store.dispatch(
+        "notion/getPost",
+        this.$store.state.notion.posts[0].id
+      );
+    }
+  },
+};
 </script>

@@ -2,15 +2,21 @@
   <aside class="post-category">
     <h3 class="post-category__title">Category</h3>
     <nav class="post-category__list">
-      <button class="item" v-for="c of this.categories" :key="c.category">
+      <button
+        class="item"
+        v-for="c of categories"
+        :key="c.category"
+        :class="{ active: c.category === category }"
+        @click="changeCategory(c.category)"
+      >
         <img
           class="item__img"
           :src="
-            require(`~/assets/images/desktop/windows/post/${c.category}.png`)
+            require(`~/assets/images/desktop/windows/post/${c.oriCategory}.png`)
           "
           alt=""
         />
-        <span class="item__category">{{ c.category }}</span>
+        <span class="item__category">{{ c.oriCategory }}</span>
         <span class="item__count">{{ c.count }}</span>
       </button>
     </nav>
@@ -24,7 +30,16 @@ export default {
     await this.$store.dispatch("notion/getCategories");
   },
   computed: {
-    ...mapState("notion", ["categories"]),
+    ...mapState("notion", ["categories", "category"]),
+  },
+  methods: {
+    async changeCategory(category) {
+      await this.$store.dispatch("notion/getPosts", category);
+      await this.$store.dispatch(
+        "notion/getPost",
+        this.$store.state.notion.posts[0].id
+      );
+    },
   },
 };
 </script>

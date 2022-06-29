@@ -29,7 +29,7 @@ export const mutations = {
 };
 
 export const actions = {
-  async fetchPosts({ state, commit }, category = "") {
+  async getPosts({ state, commit }, category) {
     const data = await this.$axios.$get("/api/posts", {
       params: {
         category,

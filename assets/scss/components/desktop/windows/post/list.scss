@@ -1,0 +1,33 @@
+.post-list {
+  flex: 0 0 auto;
+  width: 300px;
+  height: 100%;
+  overflow-y: auto;
+  &__header {
+    height: $window-header-height;
+    border-bottom: 1px solid #555;
+  }
+
+  &__item {
+    padding: 1rem;
+
+    .category {
+      font-size: 1.2rem;
+      color: beige;
+    }
+
+    .title {
+      font-size: 1.7rem;
+      color: white;
+    }
+
+    .created {
+      font-size: 1.1rem;
+    }
+
+    .desc {
+      font-size: 1.1rem;
+      line-height: normal;
+    }
+  }
+}

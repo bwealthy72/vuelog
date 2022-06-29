@@ -3,7 +3,8 @@
   width: 200px;
   height: 100%;
   padding: $window-header-height 1rem;
-  border-right: 1px solid black;
+  border-right: 1px solid #555;
+  box-sizing: border-box;
 
   &__title {
     font-size: 1.2rem;

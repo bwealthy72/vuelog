@@ -30,7 +30,10 @@ export default {
     this.pageNum = pageNum;
     this.category = category;
 
-    return cursor.toArray();
+    const result = cursor.toArray();
+    cursor.close();
+
+    return result;
   },
   async addPosts() {
     const cursor = await this.collection
@@ -39,17 +42,26 @@ export default {
       .skip(++this.currPage * this.pageNum)
       .limit(this.pageNum);
 
-    return cursor.toArray();
+    const result = cursor.toArray();
+    cursor.close();
+
+    return result;
   },
-  async getPost(pid) {
-    return await this.collection.findOne({ pid });
+  async getPost(id) {
+    return await this.collection.findOne({ id });
   },
   async getCategories() {
     const cursor = await this.collection.find().project({ _id: 0 });
-    return cursor.toArray();
+    const result = cursor.toArray();
+    cursor.close();
+
+    return result;
   },
   async getMusics() {
     const cursor = await this.collection.find().project({ _id: 0 });
-    return cursor.toArray();
+    const result = cursor.toArray();
+    cursor.close();
+
+    return result;
   },
 };
