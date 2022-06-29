@@ -1,11 +1,11 @@
 <template>
-  <aside class="post-list">
-    <header class="post-list__header"></header>
-    <div class="post-list__item" v-for="post of posts" :key="post.id">
-      <strong class="category">{{ post.oriCategory }}</strong>
-      <h3 class="title">{{ post.title }}</h3>
-      <strong class="created">{{ post.createdAt }}</strong>
-      <p class="desc">{{ post.description }}</p>
+  <aside class="post-list-wrapper">
+    <header class="header"></header>
+    <div class="post-list" v-for="post of posts" :key="post.id">
+      <strong class="post-list__category">{{ post.oriCategory }}</strong>
+      <h3 class="post-list__title">{{ post.title }}</h3>
+      <strong class="post-list__created">{{ post.createdAt }}</strong>
+      <p class="post-list__desc">{{ post.description }}</p>
     </div>
   </aside>
 </template>

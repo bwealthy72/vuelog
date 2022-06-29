@@ -30,8 +30,8 @@ export default {
     this.pageNum = pageNum;
     this.category = category;
 
-    const result = cursor.toArray();
-    cursor.close();
+    const result = await cursor.toArray();
+    await cursor.close();
 
     return result;
   },
@@ -42,25 +42,30 @@ export default {
       .skip(++this.currPage * this.pageNum)
       .limit(this.pageNum);
 
-    const result = cursor.toArray();
-    cursor.close();
+    const result = await cursor.toArray();
+    await cursor.close();
 
     return result;
   },
   async getPost(id) {
-    return await this.collection.findOne({ id });
+    const cursor = await this.collection.find({ id }).project({ _id: 0 });
+    const result = await cursor.toArray()[0];
+    await cursor.close();
+
+    return result;
+    // return await this.collection.findOne({ id }).close();
   },
   async getCategories() {
     const cursor = await this.collection.find().project({ _id: 0 });
-    const result = cursor.toArray();
-    cursor.close();
+    const result = await cursor.toArray();
+    await cursor.close();
 
     return result;
   },
   async getMusics() {
     const cursor = await this.collection.find().project({ _id: 0 });
-    const result = cursor.toArray();
-    cursor.close();
+    const result = await cursor.toArray();
+    await cursor.close();
 
     return result;
   },

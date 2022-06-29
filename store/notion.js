@@ -3,6 +3,7 @@ export const state = () => ({
   post: {},
   pageSize: 5,
   category: "",
+  postId: "",
   categories: [],
   musics: [],
 });
@@ -25,6 +26,9 @@ export const mutations = {
   },
   setMusics(state, musics) {
     state.musics = musics;
+  },
+  setPostId(state, id) {
+    state.postId = id;
   },
 };
 
@@ -59,6 +63,7 @@ export const actions = {
     });
 
     commit("setPost", data);
+    commit("setPostId", id);
   },
 
   async getCategories({ commit }, id) {
