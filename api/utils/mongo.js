@@ -48,12 +48,13 @@ export default {
     return result;
   },
   async getPost(id) {
-    const cursor = await this.collection.find({ id }).project({ _id: 0 });
-    const result = await cursor.toArray()[0];
-    await cursor.close();
+    // const cursor = await this.collection.find({ id }).project({ _id: 0 });
+    // const result = await cursor.toArray()[0];
+    // await cursor.close();
 
+    // return result;
+    const result = await this.collection.findOne({ id });
     return result;
-    // return await this.collection.findOne({ id }).close();
   },
   async getCategories() {
     const cursor = await this.collection.find().project({ _id: 0 });
