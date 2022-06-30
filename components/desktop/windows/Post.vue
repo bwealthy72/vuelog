@@ -2,7 +2,7 @@
   <main class="post-wrapper">
     <Category />
     <List />
-    <Content />
+    <!-- <Content /> -->
   </main>
 </template>
 
