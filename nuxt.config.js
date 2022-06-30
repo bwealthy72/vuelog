@@ -82,7 +82,10 @@ export default {
     locales: ["ko"],
   },
 
-  plugins: ["~/plugins/utils.js"],
+  plugins: [
+    "~/plugins/utils.js",
+    { src: "~/plugins/vue-infinite-loading.js", mode: "client" },
+  ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

@@ -48,11 +48,6 @@ export default {
     return result;
   },
   async getPost(id) {
-    // const cursor = await this.collection.find({ id }).project({ _id: 0 });
-    // const result = await cursor.toArray()[0];
-    // await cursor.close();
-
-    // return result;
     const result = await this.collection.findOne({ id });
     return result;
   },

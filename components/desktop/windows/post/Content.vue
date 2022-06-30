@@ -1,11 +1,14 @@
 <template>
   <main class="post-content">
     <header class="post-content__header"></header>
-    <p class="post-content__category">{{ post.oriCategory }}</p>
-    <h1 class="post-content__title">{{ post.title }}</h1>
-    <p class="post-content__created">{{ post.created }}</p>
-
-    <article class="post-content__body" v-html="post.body"></article>
+    <article class="post-content__body">
+      <p class="category">{{ post.oriCategory }}</p>
+      <h1 class="title">{{ post.title }}</h1>
+      <p class="created">
+        {{ $moment(post.created).format("LL") }}
+      </p>
+      <div class="body" v-html="post.body"></div>
+    </article>
   </main>
 </template>
 
@@ -16,12 +19,9 @@ export default {
   computed: {
     ...mapState("notion", ["post"]),
   },
-  // async fetch() {
-  //   await this.$store.dispatch(
-  //     "notion/getPost",
-  //     this.$store.state.notion.posts[0].id
-  //   );
-  // },
+  async fetch() {
+    await this.$store.dispatch("notion/getPost", this.posts[0].id);
+  },
 };
 </script>
 

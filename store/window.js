@@ -78,6 +78,10 @@ export const actions = {
     for (const w in state.windows) {
       maxZIndex = Math.max(state.windows[w].zIndex, maxZIndex);
     }
-    commit("setWindowIdx", { name, zIndex: ++maxZIndex });
+
+    // 최대 값이 현재 윈도우랑 같으면 바꿀 필요가 없다.
+    if (state.windows[name].zIndex != maxZIndex) {
+      commit("setWindowIdx", { name, zIndex: ++maxZIndex });
+    }
   },
 };

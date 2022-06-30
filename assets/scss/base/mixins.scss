@@ -8,10 +8,10 @@
   -webkit-box-orient: vertical;
 }
 
-@mixin macWindowScrollTheme() {
+@mixin scrollTheme($width: 6px, $height: 4px) {
   &::-webkit-scrollbar {
-    width: 6px;
-    height: 4px;
+    width: $width;
+    height: $height;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -22,8 +22,8 @@
   }
 
   &::-webkit-scrollbar-track {
-    background-color: #292f33;
-    border-left: 0.2px solid #565656;
-    border-right: 0.2px solid #565656;
+    background-color: transparent;
+    // border-left: 0.2px solid #565656;
+    // border-right: 0.2px solid #565656;
   }
 }

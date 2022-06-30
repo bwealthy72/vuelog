@@ -14,6 +14,14 @@
   &__list {
     margin-top: 1rem;
 
+    &:focus,
+    :focus-visible,
+    :focus-within {
+      .item.active {
+        background-color: coral;
+      }
+    }
+
     .item {
       display: flex;
       align-items: center;

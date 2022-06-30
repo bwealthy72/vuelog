@@ -1,12 +1,35 @@
 <template>
-  <aside class="post-list-wrapper">
-    <header class="header"></header>
-    <div class="post-list" v-for="post of posts" :key="post.id">
-      <strong class="post-list__category">{{ post.oriCategory }}</strong>
-      <h3 class="post-list__title">{{ post.title }}</h3>
-      <strong class="post-list__created">{{ post.createdAt }}</strong>
-      <p class="post-list__desc">{{ post.description }}</p>
-    </div>
+  <aside class="post-list">
+    <header class="post-list__header"></header>
+    <nav class="post-list__body">
+      <button
+        class="item"
+        v-for="p of posts"
+        :key="p.id"
+        :class="{ active: p.id == postId }"
+        @click="changePost(p.id)"
+      >
+        <div class="item__text">
+          <strong class="category">{{ p.oriCategory }}</strong>
+          <h3 class="title">{{ p.title }}</h3>
+          <strong class="created">{{ $moment(p.createdAt).fromNow() }}</strong>
+          <p class="desc">{{ p.description }}</p>
+        </div>
+        <div class="item__image" v-if="p.cover">
+          <img :src="p.cover" alt="cover" />
+        </div>
+      </button>
+
+      <infinite-loading
+        @infinite="infiniteHandler"
+        spinner="spiral"
+        :key="category"
+      >
+        <!-- category라는 key를 줌으로써 바뀌면 다시 렌더링한다. -->
+        <div slot="spinner">Loading...</div>
+        <div slot="no-more"></div>
+      </infinite-loading>
+    </nav>
   </aside>
 </template>
 
@@ -15,11 +38,23 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState("notion", ["posts"]),
+    ...mapState("notion", ["postId", "posts", "category"]),
   },
-  // async fetch() {
-  //   await this.$store.dispatch("notion/getPosts");
-  // },
+  methods: {
+    infiniteHandler($state) {
+      this.$store.dispatch("notion/addPosts").then((done) => {
+        console.log(done);
+        if (done) {
+          $state.complete();
+        } else {
+          $state.loaded();
+        }
+      });
+    },
+    changePost(id) {
+      this.$store.dispatch("notion/getPost", id);
+    },
+  },
 };
 </script>
 

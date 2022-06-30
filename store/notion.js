@@ -1,7 +1,7 @@
 export const state = () => ({
   posts: [],
   post: {},
-  pageSize: 5,
+  pageSize: 7,
   category: "",
   postId: "",
   categories: [],
@@ -53,6 +53,9 @@ export const actions = {
     });
 
     commit("addPosts", data);
+
+    const done = data.length == 0;
+    return done;
   },
 
   async getPost({ commit }, id) {
