@@ -1,5 +1,8 @@
 .post-content {
+  display: flex;
+  flex-direction: column;
   color: white;
+  height: 100%;
   &__header {
     height: $window-header-height;
     border-bottom: 1px solid #555;
@@ -7,7 +10,11 @@
   }
 
   &__body {
+    flex: 1;
     background-color: #1d1f21;
+
+    height: 100%;
+    overflow-y: auto;
     .category {
       font-size: 1.5rem;
     }
@@ -19,6 +26,12 @@
     .created {
       font-size: 1.2rem;
       color: gray;
+    }
+
+    .content {
+      img {
+        max-width: 80%;
+      }
     }
   }
 }

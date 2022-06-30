@@ -7,7 +7,7 @@
       <p class="created">
         {{ $moment(post.created).format("LL") }}
       </p>
-      <div class="body" v-html="post.body"></div>
+      <div class="content" v-html="post.body"></div>
     </article>
   </main>
 </template>
