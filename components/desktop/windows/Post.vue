@@ -22,6 +22,7 @@ export default {
     let category = this.$route.params.category;
     if (!category) category = "";
 
+    await this.$store.dispatch("notion/getCategories");
     await this.$store.dispatch("notion/getPosts", category);
     if (this.$route.params.id) {
       await this.$store.dispatch("notion/getPost", this.$route.params.id);

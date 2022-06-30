@@ -26,9 +26,6 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  async fetch() {
-    await this.$store.dispatch("notion/getCategories");
-  },
   computed: {
     ...mapState("notion", ["categories", "category"]),
   },

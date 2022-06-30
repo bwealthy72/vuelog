@@ -19,9 +19,6 @@ export default {
   computed: {
     ...mapState("notion", ["post"]),
   },
-  async fetch() {
-    await this.$store.dispatch("notion/getPost", this.posts[0].id);
-  },
 };
 </script>
 

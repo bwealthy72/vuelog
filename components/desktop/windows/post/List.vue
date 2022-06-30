@@ -25,7 +25,6 @@
         spinner="spiral"
         :key="category"
       >
-        <!-- category라는 key를 줌으로써 바뀌면 다시 렌더링한다. -->
         <div slot="spinner">Loading...</div>
         <div slot="no-more"></div>
       </infinite-loading>
@@ -42,14 +41,17 @@ export default {
   },
   methods: {
     infiniteHandler($state) {
-      this.$store.dispatch("notion/addPosts").then((done) => {
-        console.log(done);
-        if (done) {
-          $state.complete();
-        } else {
-          $state.loaded();
-        }
-      });
+      if (this.posts.length > 0) {
+        this.$store.dispatch("notion/addPosts").then((done) => {
+          if (done) {
+            $state.complete();
+          } else {
+            $state.loaded();
+          }
+        });
+      } else {
+        $state.complete();
+      }
     },
     changePost(id) {
       this.$store.dispatch("notion/getPost", id);
