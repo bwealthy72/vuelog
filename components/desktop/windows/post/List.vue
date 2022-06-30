@@ -20,14 +20,14 @@
         </div>
       </button>
 
-      <infinite-loading
+      <!-- <infinite-loading
         @infinite="infiniteHandler"
         spinner="spiral"
         :key="category"
       >
         <div slot="spinner">Loading...</div>
         <div slot="no-more"></div>
-      </infinite-loading>
+      </infinite-loading> -->
     </nav>
   </aside>
 </template>
