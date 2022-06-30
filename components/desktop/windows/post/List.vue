@@ -20,14 +20,15 @@
         </div>
       </button>
 
-      <!-- <infinite-loading
+      <infinite-loading
         @infinite="infiniteHandler"
         spinner="spiral"
         :key="category"
+        v-if="turnOnInfinite"
       >
-        <div slot="spinner">Loading...</div>
         <div slot="no-more"></div>
-      </infinite-loading> -->
+        <div slot="no-results"></div>
+      </infinite-loading>
     </nav>
   </aside>
 </template>
@@ -36,26 +37,32 @@
 import { mapState } from "vuex";
 
 export default {
+  data() {
+    return {
+      turnOnInfinite: false,
+    };
+  },
   computed: {
     ...mapState("notion", ["postId", "posts", "category"]),
   },
   methods: {
     infiniteHandler($state) {
-      if (this.posts.length > 0) {
-        this.$store.dispatch("notion/addPosts").then((done) => {
-          if (done) {
-            $state.complete();
-          } else {
-            $state.loaded();
-          }
-        });
-      } else {
-        $state.complete();
-      }
+      this.$store.dispatch("notion/addPosts").then((done) => {
+        if (done) {
+          $state.complete();
+        } else {
+          $state.loaded();
+        }
+      });
     },
+
     changePost(id) {
       this.$store.dispatch("notion/getPost", id);
     },
+  },
+  mounted() {
+    // 미리 켜지면 client와 server-side render가 다르다는 에러가 나옴
+    this.turnOnInfinite = true;
   },
 };
 </script>
