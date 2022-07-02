@@ -32,7 +32,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("window", ["windows", "boundary"]),
+    ...mapState("window", ["windows", "boundary", "maxZIndex"]),
   },
   watch: {
     cursor(c) {
@@ -206,7 +206,9 @@ export default {
       this.moveStartPos = [nx, ny];
     },
     focus(name) {
-      this.$store.dispatch("window/focus", name);
+      if (this.windows[name].zIndex < this.maxZIndex - 1) {
+        this.$store.dispatch("window/focus", name);
+      }
     },
   },
   mounted() {
@@ -221,5 +223,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

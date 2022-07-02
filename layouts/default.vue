@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <video autoplay muted loop class="bg">
+    <img
+      v-if="$device.isSafari"
+      class="bg"
+      src="~/assets/images/bg.png"
+      alt=""
+    />
+    <video v-else autoplay muted loop class="bg">
       <source src="~/assets/images/bg.webm" type="video/webm" />
     </video>
 

@@ -77,12 +77,13 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ["@nuxtjs/moment"],
+  buildModules: ["@nuxtjs/moment", "@nuxtjs/device"],
   moment: {
     locales: ["ko"],
   },
 
   plugins: [
+    "~/plugins/axios.js",
     "~/plugins/utils.js",
     { src: "~/plugins/vue-infinite-loading.js", mode: "client" },
   ],

@@ -4,6 +4,8 @@ export const state = () => ({
     left: 0,
   },
 
+  maxZIndex: 1,
+
   // Mac window들에 대한 정보를 담고있다.
   windows: {
     Post: {
@@ -47,6 +49,9 @@ export const mutations = {
   setWindowIdx(state, { name, zIndex }) {
     state.windows[name].zIndex = zIndex;
   },
+  plusMaxZIndex(state) {
+    state.maxZIndex += 1;
+  },
 };
 
 export const actions = {
@@ -74,14 +79,7 @@ export const actions = {
     commit("setPos", { name, x, y });
   },
   focus({ state, commit }, name) {
-    let maxZIndex = -1;
-    for (const w in state.windows) {
-      maxZIndex = Math.max(state.windows[w].zIndex, maxZIndex);
-    }
-
-    // 최대 값이 현재 윈도우랑 같으면 바꿀 필요가 없다.
-    if (state.windows[name].zIndex != maxZIndex) {
-      commit("setWindowIdx", { name, zIndex: ++maxZIndex });
-    }
+    commit("setWindowIdx", { name, zIndex: state.maxZIndex });
+    commit("plusMaxZIndex");
   },
 };

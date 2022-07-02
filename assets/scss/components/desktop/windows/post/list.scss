@@ -22,6 +22,7 @@
 
     .item {
       display: flex;
+      align-items: center;
       width: 100%;
       padding: 1.5rem 1rem 1.5rem 2.5rem;
       border-radius: 8px;
@@ -57,13 +58,14 @@
 
         .category {
           font-size: 1.2rem;
-          font-weight:bold;
+          font-weight: bold;
           color: #8c88ff;
         }
 
         .title {
           font-size: 1.8rem;
           color: white;
+          @include textClip(2);
         }
 
         .created {
@@ -79,8 +81,6 @@
       }
       &__image {
         flex: 0 0 35%;
-        height: 100%;
-        display: inline-block;
 
         img {
           width: 100%;

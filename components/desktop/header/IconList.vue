@@ -9,20 +9,26 @@
 
 <script>
 import MusicPlayer from "~/components/desktop/header/icons/MusicPlayer.vue";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
       icons: {
-        // musicPlayer: {
-        //   img: require("~/assets/images/audio/music.png"),
-        //   component: "MusicPlayer",
-        // },
+        musicPlayer: {
+          img: require("~/assets/images/audio/music.png"),
+          component: "MusicPlayer",
+        },
       },
     };
   },
+  computed: {
+    ...mapState("header", ["activatedItem"]),
+  },
   methods: {
-    deactivateHeaderIcon(e) {
-      this.$store.dispatch("header/deactivate");
+    deactivateHeaderIcon() {
+      if (this.activatedItem) {
+        this.$store.dispatch("header/deactivate");
+      }
     },
   },
   mounted() {

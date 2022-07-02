@@ -1,51 +1,90 @@
-import { Db } from "mongodb";
 import mongo from "./utils/mongo";
+import rateLimit from "express-rate-limit";
 
 const app = require("express")();
 
+const limiter = rateLimit({
+  windowMs: 5 * 1000, // 5초마다 리셋
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use(limiter);
+
 app.get("/posts", async (req, res) => {
-  await mongo.connect("notion", "posts");
-
-  const posts = await mongo.getPosts(
-    req.query.category,
-    parseInt(req.query.pageSize)
-  );
-
-  await mongo.disconnect();
-
-  res.json(posts);
+  let result = null;
+  try {
+    await mongo.connect("notion", "posts");
+    result = await mongo.getPosts(
+      req.query.category,
+      parseInt(req.query.pageSize)
+    );
+  } catch (error) {
+    console.log("여선 안잡?");
+    console.error(error);
+  } finally {
+    await mongo.disconnect();
+  }
+  res.json(result);
 });
 
 app.get("/posts/next", async (req, res) => {
-  await mongo.connect("notion", "posts");
+  let result = null;
+  try {
+    await mongo.connect("notion", "posts");
+    result = await mongo.addPosts();
+  } catch (error) {
+    console.error(error);
+    console.log("여선 안잡?");
+  } finally {
+    await mongo.disconnect();
+  }
 
-  const posts = await mongo.addPosts();
-  await mongo.disconnect();
-  res.json(posts);
+  res.json(result);
 });
 
 app.get("/post", async (req, res) => {
-  await mongo.connect("notion", "posts");
+  let result = null;
+  try {
+    await mongo.connect("notion", "posts");
 
-  const post = await mongo.getPost(req.query.id);
-  await mongo.disconnect();
-  res.json(post);
+    result = await mongo.getPost(req.query.id);
+  } catch (error) {
+    console.error(error);
+    console.log("여선 안잡?");
+  } finally {
+    await mongo.disconnect();
+  }
+  res.json(result);
 });
 
 app.get("/categories", async (req, res) => {
-  await mongo.connect("notion", "categories");
-
-  const categories = await mongo.getCategories();
-  mongo.disconnect();
-  res.json(categories);
+  let result = null;
+  try {
+    await mongo.connect("notion", "categories");
+    result = await mongo.getCategories();
+  } catch (error) {
+    console.error(error);
+    console.log("여선 안잡?");
+  } finally {
+    await mongo.disconnect();
+  }
+  res.json(result);
 });
 
 app.get("/musics", async (req, res) => {
-  await mongo.connect("notion", "musics");
-
-  const musics = await mongo.getMusics();
-  mongo.disconnect();
-  res.json(musics);
+  let result = null;
+  try {
+    await mongo.connect("notion", "musics");
+    result = await mongo.getMusics();
+  } catch (error) {
+    console.error(error);
+    console.log("여선 안잡?");
+  } finally {
+    await mongo.disconnect();
+  }
+  res.json(result);
 });
 
 module.exports = app;

@@ -1,8 +1,10 @@
 .post-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   color: white;
   height: 100%;
+
   &__header {
     height: $window-header-height;
     border-bottom: 1px solid #555;
@@ -10,27 +12,83 @@
   }
 
   &__body {
-    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
     background-color: #1d1f21;
-
     height: 100%;
     overflow-y: auto;
-    .category {
-      font-size: 1.5rem;
-    }
-
-    .title {
-      font-size: 3rem;
-    }
 
     .created {
       font-size: 1.2rem;
       color: gray;
+      text-align: center;
+    }
+
+    .category {
+      font-size: 1.5rem;
+      color: #8c88ff;
+      margin-top: 1rem;
+    }
+
+    .title {
+      font-size: 3rem;
+      margin-top: 1rem;
     }
 
     .content {
+      margin-top: 1rem;
+      font-size: 1.4rem;
+
+      h2 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+
+      h3 {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        font-size: 1.3em;
+        font-weight: bold;
+      }
+
+      .to-do {
+        ::before {
+          content: "";
+        }
+      }
+
+      > ul,
+      > ol {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      ul,
+      ol {
+        padding-left: 3rem;
+        list-style-type: revert;
+        li {
+          line-height: 1.5;
+        }
+      }
+
+      blockquote {
+        border-left: 2px solid #eee;
+        padding-left: 2rem;
+        margin-left: 2rem;
+        margin-right: 4rem;
+      }
+
       img {
         max-width: 80%;
+        border-radius: 8px;
+      }
+
+      hr {
+        width: 30%;
       }
     }
   }

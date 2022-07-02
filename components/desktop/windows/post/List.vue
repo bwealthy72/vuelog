@@ -23,8 +23,8 @@
       <infinite-loading
         @infinite="infiniteHandler"
         spinner="spiral"
-        :key="category"
         v-if="turnOnInfinite"
+        :identifier="identifierId"
       >
         <div slot="no-more"></div>
         <div slot="no-results"></div>
@@ -40,10 +40,19 @@ export default {
   data() {
     return {
       turnOnInfinite: false,
+      identifierId: 0,
     };
   },
   computed: {
     ...mapState("notion", ["postId", "posts", "category"]),
+  },
+  watch: {
+    category(v) {
+      setTimeout(() => {
+        this.identifierId = v;
+        console.log("바뀜", this.identifierId);
+      }, 1000);
+    },
   },
   methods: {
     infiniteHandler($state) {
@@ -57,9 +66,12 @@ export default {
     },
 
     changePost(id) {
-      this.$store.dispatch("notion/getPost", id);
+      if (id != this.postId) {
+        this.$store.dispatch("notion/getPost", id);
+      }
     },
   },
+
   mounted() {
     // 미리 켜지면 client와 server-side render가 다르다는 에러가 나옴
     this.turnOnInfinite = true;
