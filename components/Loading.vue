@@ -1,6 +1,5 @@
 <template lang="html">
   <div class="loading-page" v-if="loading">
-    <img src="~/assets/images/loading.webp" alt="loading" />
     <p>Loading...</p>
   </div>
 </template>
@@ -21,6 +20,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 1000000;
   display: flex;
   flex-direction: column;
   justify-content: center;

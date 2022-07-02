@@ -1,7 +1,7 @@
 <template>
   <aside class="post-list">
     <header class="post-list__header"></header>
-    <nav class="post-list__body">
+    <nav class="post-list__body" ref="body">
       <button
         class="item"
         v-for="p of posts"
@@ -48,10 +48,8 @@ export default {
   },
   watch: {
     category(v) {
-      setTimeout(() => {
-        this.identifierId = v;
-        console.log("바뀜", this.identifierId);
-      }, 1000);
+      this.identifierId = v;
+      this.$refs.body.scrollTo(0, 0); // If this isn't here, infinite scroll run many times.
     },
   },
   methods: {
@@ -65,9 +63,9 @@ export default {
       });
     },
 
-    changePost(id) {
+    async changePost(id) {
       if (id != this.postId) {
-        this.$store.dispatch("notion/getPost", id);
+        await this.$store.dispatch("notion/getPost", id);
       }
     },
   },

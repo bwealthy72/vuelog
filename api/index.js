@@ -5,7 +5,7 @@ const app = require("express")();
 
 const limiter = rateLimit({
   windowMs: 5 * 1000, // 5초마다 리셋
-  max: 5,
+  max: 12,
   standardHeaders: true,
   legacyHeaders: false,
 });
@@ -20,9 +20,6 @@ app.get("/posts", async (req, res) => {
       req.query.category,
       parseInt(req.query.pageSize)
     );
-  } catch (error) {
-    console.log("여선 안잡?");
-    console.error(error);
   } finally {
     await mongo.disconnect();
   }
@@ -34,9 +31,6 @@ app.get("/posts/next", async (req, res) => {
   try {
     await mongo.connect("notion", "posts");
     result = await mongo.addPosts();
-  } catch (error) {
-    console.error(error);
-    console.log("여선 안잡?");
   } finally {
     await mongo.disconnect();
   }
@@ -50,9 +44,6 @@ app.get("/post", async (req, res) => {
     await mongo.connect("notion", "posts");
 
     result = await mongo.getPost(req.query.id);
-  } catch (error) {
-    console.error(error);
-    console.log("여선 안잡?");
   } finally {
     await mongo.disconnect();
   }
@@ -64,9 +55,6 @@ app.get("/categories", async (req, res) => {
   try {
     await mongo.connect("notion", "categories");
     result = await mongo.getCategories();
-  } catch (error) {
-    console.error(error);
-    console.log("여선 안잡?");
   } finally {
     await mongo.disconnect();
   }
@@ -78,9 +66,6 @@ app.get("/musics", async (req, res) => {
   try {
     await mongo.connect("notion", "musics");
     result = await mongo.getMusics();
-  } catch (error) {
-    console.error(error);
-    console.log("여선 안잡?");
   } finally {
     await mongo.disconnect();
   }

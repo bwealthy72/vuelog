@@ -13,14 +13,17 @@
     <DesktopDock />
     <DesktopHeader />
     <Nuxt />
+
+    <Loading />
   </div>
 </template>
 
 <script>
 export default {
   mounted() {
-    this.$nextTick(() => {
+    window.onNuxtReady(() => {
       this.$store.commit("loadingEnd");
+      console.log("nuxt ready");
     });
   },
 };
