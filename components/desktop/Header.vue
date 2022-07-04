@@ -2,7 +2,7 @@
   <header class="desktop-header">
     <img
       class="desktop-header__logo"
-      src="@/assets/images/header/ico-apple.svg"
+      src="@/assets/images/ico-apple.svg"
       alt="logo"
     />
     <p class="desktop-header__title">{{ title }}</p>

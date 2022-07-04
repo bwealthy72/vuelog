@@ -1,13 +1,19 @@
 <template>
-  <main class="post-content">
+  <main
+    class="post-content"
+    :style="{ width: `calc(100% - ${categoryWidth}px - ${listWidth}px)` }"
+  >
     <header class="post-content__header"></header>
     <article class="post-content__body">
-      <p class="created">
-        {{ $moment(post.created).format("LLL") }}
-      </p>
-      <p class="category">{{ post.oriCategory }}</p>
-      <h1 class="title">{{ post.title }}</h1>
-      <div class="content" v-html="post.body"></div>
+      <template v-if="post">
+        <strong class="category">{{ post.oriCategory }}</strong>
+        <h1 class="title">{{ post.title }}</h1>
+        <p class="created">{{ $moment(post.created).format("LLL") }}</p>
+        <div class="content" v-html="post.body"></div>
+      </template>
+      <div v-else class="loader-wrapper">
+        <div class="loader"></div>
+      </div>
     </article>
   </main>
 </template>
@@ -18,6 +24,7 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState("notion", ["post"]),
+    ...mapState("window", ["categoryWidth", "listWidth"]),
   },
 };
 </script>

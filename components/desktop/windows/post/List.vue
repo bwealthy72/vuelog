@@ -1,34 +1,41 @@
 <template>
-  <aside class="post-list">
+  <aside class="post-list" :style="{ width: listWidth + 'px' }">
     <header class="post-list__header"></header>
     <nav class="post-list__body" ref="body">
-      <button
-        class="item"
-        v-for="p of posts"
-        :key="p.id"
-        :class="{ active: p.id == postId }"
-        @click="changePost(p.id)"
-      >
-        <div class="item__text">
-          <strong class="category">{{ p.oriCategory }}</strong>
-          <h3 class="title">{{ p.title }}</h3>
-          <strong class="created">{{ $moment(p.createdAt).fromNow() }}</strong>
-          <p class="desc">{{ p.description }}</p>
-        </div>
-        <div class="item__image" v-if="p.cover">
-          <img :src="p.cover" alt="cover" />
-        </div>
-      </button>
+      <template v-if="posts">
+        <button
+          class="item"
+          v-for="p of posts"
+          :key="p.id"
+          :class="{ active: p.id == postId }"
+          @click="changePost(p.id)"
+        >
+          <div class="item__text">
+            <strong class="category">{{ p.oriCategory }}</strong>
+            <h3 class="title">{{ p.title }}</h3>
+            <strong class="created">{{
+              $moment(p.createdAt).fromNow()
+            }}</strong>
+            <p class="desc">{{ p.description }}</p>
+          </div>
+          <div class="item__image" v-if="p.cover">
+            <img :src="p.cover" alt="cover" />
+          </div>
+        </button>
 
-      <infinite-loading
-        @infinite="infiniteHandler"
-        spinner="spiral"
-        v-if="turnOnInfinite"
-        :identifier="identifierId"
-      >
-        <div slot="no-more"></div>
-        <div slot="no-results"></div>
-      </infinite-loading>
+        <infinite-loading
+          @infinite="infiniteHandler"
+          spinner="spiral"
+          v-if="turnOnInfinite"
+          :identifier="identifierId"
+        >
+          <div slot="no-more"></div>
+          <div slot="no-results"></div>
+        </infinite-loading>
+      </template>
+      <div class="loader-wrapper" v-else>
+        <div class="loader"></div>
+      </div>
     </nav>
   </aside>
 </template>
@@ -45,6 +52,7 @@ export default {
   },
   computed: {
     ...mapState("notion", ["postId", "posts", "category"]),
+    ...mapState("window", ["listWidth"]),
   },
   watch: {
     category(v) {

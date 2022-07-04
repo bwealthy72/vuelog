@@ -18,6 +18,9 @@ export const state = () => ({
       zIndex: 0,
     },
   },
+
+  categoryWidth: 200,
+  listWidth: 350,
 });
 
 export const mutations = {
@@ -51,6 +54,12 @@ export const mutations = {
   },
   plusMaxZIndex(state) {
     state.maxZIndex += 1;
+  },
+  setCategoryWidth(state, width) {
+    state.categoryWidth = width;
+  },
+  setListWidth(state, width) {
+    state.listWidth = width;
   },
 };
 

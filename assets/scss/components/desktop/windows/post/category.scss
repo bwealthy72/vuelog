@@ -1,9 +1,8 @@
 .post-category {
   flex: 0 0 auto;
-  width: 200px;
   height: 100%;
   padding: $window-header-height 1rem;
-  border-right: 1px solid #555;
+  border-right: 1px solid #222;
   box-sizing: border-box;
 
   &__title {
@@ -31,8 +30,16 @@
       box-sizing: border-box;
       border-radius: 4px;
       margin-bottom: 0.5rem;
+      border: 1px solid transparent;
+
+      &:hover {
+        .item__category {
+          color: $key-color;
+        }
+      }
 
       &.active {
+        transition: background-color 0.5s, border 0.5s;
         background-color: #414141;
       }
 
@@ -44,6 +51,7 @@
         margin-left: 1em;
         font-size: 1.6rem;
         color: white;
+        @include textClip(1);
       }
 
       &__count {

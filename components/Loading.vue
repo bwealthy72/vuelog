@@ -1,12 +1,25 @@
 <template lang="html">
   <div class="loading-page" v-if="loading">
-    <p>Loading...</p>
+    <img
+      class="loading-page__image"
+      src="~/assets/images/ico-apple.svg"
+      alt="apple"
+    />
+    <div class="loading-page__progress">
+      <div class="curr-bar" :style="{ width: progress + '%' }"></div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 export default {
+  props: {
+    progress: {
+      type: Number,
+      required: true,
+    },
+  },
   computed: {
     ...mapState(["loading"]),
   },
@@ -25,18 +38,31 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(4px);
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0);
+  overflow: hidden;
 
-  img {
+  &__image {
     width: 60px;
+    height: 60px;
   }
 
-  p {
-    font-size: 25px;
-    font-weight: bold;
-    color: white;
-    margin: 5px;
+  &__progress {
+    position: relative;
+    margin-top: 80px;
+    width: 180px;
+    height: 5px;
+    border-radius: 5px;
+    background-color: #474747;
+
+    .curr-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border-radius: 5px;
+      background-color: white;
+      transition: width 0.5s;
+    }
   }
 }
 </style>

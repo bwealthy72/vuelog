@@ -1,5 +1,5 @@
 <template>
-  <aside class="post-category">
+  <aside class="post-category" :style="{ width: categoryWidth + 'px' }">
     <h3 class="post-category__title">Category</h3>
     <nav class="post-category__list">
       <button
@@ -28,6 +28,7 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState("notion", ["categories", "category"]),
+    ...mapState("window", ["categoryWidth"]),
   },
   methods: {
     async changeCategory(category) {

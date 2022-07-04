@@ -85,7 +85,7 @@ export default {
       let mode = null;
       // 모든 윈도우 중 zIndex에서 제일 상단의 window를 찾고 해당 window구한다.
       for (const w in this.windows) {
-        const m = this.mouseMode(e, this.windows[w]);
+        const m = this.getMouseMode(e, this.windows[w]);
         if (m && maxZIndex <= this.windows[w].zIndex) {
           maxZIndex = this.windows[w].zIndex;
 
@@ -95,7 +95,7 @@ export default {
       }
       return { name, mode };
     },
-    mouseMode(e, window) {
+    getMouseMode(e, window) {
       const [x, y] = [e.clientX, e.clientY];
       const { l, r, t, b } = this.getRect(window);
       const windowHeaderHeight = this.$getScssLength("windowHeaderHeight");

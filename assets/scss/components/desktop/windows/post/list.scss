@@ -2,18 +2,18 @@
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  width: 350px;
   height: 100%;
   border-right: 1px solid #222;
 
   &__header {
     height: $window-header-height;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid #222;
     background-color: #343637;
   }
 
   &__body {
     @include scrollTheme;
+    position: relative;
     background-color: #1d1f21;
     // padding: 1rem;
     flex: 1;
@@ -21,27 +21,48 @@
     padding: 1rem;
 
     .item {
+      position: relative;
       display: flex;
       align-items: center;
       width: 100%;
       padding: 1.5rem 1rem 1.5rem 2.5rem;
       border-radius: 8px;
+      border: 1px solid transparent;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 2.5rem;
+        width: 20%;
+        height: 1px;
+        background-color: gray;
+      }
+
+      &:hover {
+        &::after {
+          transition: all 0.5s;
+          background-color: $key-color;
+          width: 90%;
+        }
+      }
 
       &.active {
-        background-color: #8c88ff;
+        // transition: background-color 0.5s, border 0.5s;
+        background-color: $key-color;
 
         .item__text {
           .category {
             color: #ffcaca;
           }
           .title {
-            color: white;
+            color: #1d1f21;
           }
           .created {
-            color: #f6f6f6;
+            color: #656565;
           }
           .desc {
-            color: #d0d0d0;
+            color: #5b5b5b;
           }
         }
       }
@@ -59,7 +80,7 @@
         .category {
           font-size: 1.2rem;
           font-weight: bold;
-          color: #8c88ff;
+          color: $key-color;
         }
 
         .title {

@@ -7,11 +7,14 @@
 
   &__header {
     height: $window-header-height;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid #222;
     background-color: #343637;
   }
 
   &__body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
     width: 100%;
     height: calc(100% - #{$window-header-height});
     box-sizing: border-box;
@@ -19,25 +22,35 @@
     background-color: #1d1f21;
     overflow-y: auto;
 
+    @include scrollTheme;
+
     .created {
       font-size: 1.2rem;
       color: gray;
       text-align: center;
+      margin: 1.5rem 0;
     }
 
     .category {
+      display: inline-block;
       font-size: 1.5rem;
-      color: #8c88ff;
-      margin-top: 1rem;
+      background-color: $key-color;
+      border-radius: 8px;
+      padding: 0.3em 0.8em;
+      color: white;
+      text-align: center;
+      margin: 1rem auto;
     }
 
     .title {
       font-size: 3rem;
       margin-top: 1rem;
+      text-align: center;
+      text-shadow: 0px 0px 10px $key-color;
     }
 
     .content {
-      margin-top: 1rem;
+      margin-top: 3rem;
       font-size: 1.4rem;
 
       h2 {

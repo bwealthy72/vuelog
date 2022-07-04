@@ -14,16 +14,31 @@
     <DesktopHeader />
     <Nuxt />
 
-    <Loading />
+    <Loading :progress="progress" />
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      progress: 0,
+    };
+  },
   mounted() {
+    const timer = setInterval(() => {
+      if (this.progress < 90) {
+        this.progress += 1;
+        clearInterval(this.timer);
+      }
+    }, 500);
+
     window.onNuxtReady(() => {
-      this.$store.commit("loadingEnd");
-      console.log("nuxt ready");
+      this.progress = 100;
+      clearInterval(this.timer);
+      setTimeout(() => {
+        this.$store.commit("loadingEnd");
+      }, 500);
     });
   },
 };

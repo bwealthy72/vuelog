@@ -38,6 +38,8 @@ export const actions = {
   async getPosts({ state, commit }, category) {
     if (isRequesting) return;
     isRequesting = true;
+    commit("setCategory", category);
+
     const data = await this.$axios.$get("/api/posts", {
       params: {
         category,
@@ -46,7 +48,6 @@ export const actions = {
     });
 
     commit("setPosts", data);
-    commit("setCategory", category);
     isRequesting = false;
   },
   async addPosts({ state, commit }) {
@@ -69,13 +70,15 @@ export const actions = {
   async getPost({ commit }, id) {
     if (isRequesting) return;
     isRequesting = true;
+    commit("setPost", null);
+    commit("setPostId", id);
+
     const data = await this.$axios.$get("/api/post", {
       params: {
         id,
       },
     });
     commit("setPost", data);
-    commit("setPostId", id);
     isRequesting = false;
   },
 
