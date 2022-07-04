@@ -2,7 +2,6 @@ export default {
   server: {
     host: "0", // default: localhost
   },
-  target: "server",
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -70,6 +69,10 @@ export default {
 
   serverMiddleware: [{ path: "/api", handler: __dirname + "/api/index.js" }],
 
+  router: {
+    middleware: ["layout"],
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ["~/assets/scss/index.scss"],
 
@@ -119,7 +122,4 @@ export default {
   proxy: {
     "/api": process.env.VERCEL_URL,
   },
-
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
 };
