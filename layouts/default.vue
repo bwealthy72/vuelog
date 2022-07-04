@@ -25,15 +25,16 @@ export default {
       progress: 0,
     };
   },
-  mounted() {
-    const timer = setInterval(() => {
+  beforeCreate() {
+    this.timer = setInterval(() => {
       if (this.progress < 90) {
         this.progress += 1;
       } else {
         clearInterval(this.timer);
       }
     }, 500);
-
+  },
+  mounted() {
     window.onNuxtReady(() => {
       this.progress = 100;
       clearInterval(this.timer);
