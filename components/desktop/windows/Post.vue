@@ -36,28 +36,23 @@ export default {
     },
     mouseMoveHandler(e) {
       const rect = this.$el.getBoundingClientRect();
-      const windowHeaderHeight = this.$getScssLength("windowHeaderHeight");
-      if (e.clientY > rect.top + windowHeaderHeight) {
-        if (this.resizeMode === "category") {
-          const width = e.clientX - rect.left;
-          if (width >= 150) {
-            this.$store.commit("window/setCategoryWidth", width);
-          }
-        } else if (this.resizeMode === "list") {
-          const width = e.clientX - rect.left - this.categoryWidth;
-          if (width >= 200) {
-            this.$store.commit("window/setListWidth", width);
-          }
-        } else {
-          const mode = this.getMouseMode(e);
-          if (mode == "category" || mode == "list") {
-            this.cursor = "col-resize";
-          } else {
-            this.cursor = "inherit";
-          }
+      if (this.resizeMode === "category") {
+        const width = e.clientX - rect.left;
+        if (width >= 150) {
+          this.$store.commit("window/setCategoryWidth", width);
+        }
+      } else if (this.resizeMode === "list") {
+        const width = e.clientX - rect.left - this.categoryWidth;
+        if (width >= 200) {
+          this.$store.commit("window/setListWidth", width);
         }
       } else {
-        this.cursor = "inherit";
+        const mode = this.getMouseMode(e);
+        if (mode == "category" || mode == "list") {
+          this.cursor = "col-resize";
+        } else {
+          this.cursor = "inherit";
+        }
       }
     },
     mouseUpHandler(e) {

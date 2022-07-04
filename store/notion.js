@@ -8,6 +8,9 @@ export const state = () => ({
   postId: "",
   categories: [],
   musics: [],
+
+  turnOnInfinite: false, // 미리 켜지면 스크롤이 여러번 실행되서 에러가 나옴
+  // 미리 켜지면 client와 server-side render가 다르다는 에러가 나옴
 });
 
 export const mutations = {
@@ -31,6 +34,9 @@ export const mutations = {
   },
   setPostId(state, id) {
     state.postId = id;
+  },
+  setTurnOnInfinite(state, bool) {
+    state.turnOnInfinite = bool;
   },
 };
 

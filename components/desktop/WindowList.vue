@@ -32,7 +32,13 @@ export default {
     };
   },
   computed: {
-    ...mapState("window", ["windows", "boundary", "maxZIndex"]),
+    ...mapState("window", [
+      "windows",
+      "boundary",
+      "maxZIndex",
+      "categoryWidth",
+      "listWidth",
+    ]),
   },
   watch: {
     cursor(c) {
@@ -108,6 +114,7 @@ export default {
       const isBottom = Math.abs(y - b) < edge;
 
       let result = null;
+      // Window 안에 있는지
       if (l - edge < x && x < r + edge && t - edge < y && y < b + edge) {
         result = "in";
 
@@ -128,7 +135,15 @@ export default {
         } else if (isBottom) {
           result = "resize-b";
         } else if (y < windowHeaderHeight + t) {
-          result = "move";
+          // 특수 케이스로 Post에서 헤더에서는 Resize가 되는 공간이 있음.
+          if (
+            Math.abs(x - this.categoryWidth - l) < 5 ||
+            Math.abs(x - this.categoryWidth - this.listWidth - l) < 5
+          ) {
+            result = "post-resize";
+          } else {
+            result = "move";
+          }
         }
       }
 

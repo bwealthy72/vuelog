@@ -109,7 +109,7 @@ export default {
       retries: 4, // 최대 재전송 횟수 4회
       shouldResetTimeout: true, // 재전송 간 타임아웃을 리셋하기
       retryDelay: (retry) => {
-        return retry * 1000; // 재전송 횟수 * 0.1초만큼 재전송 시작 시간을 지연시키기
+        return retry * 10000; // 재전송 횟수 * 0.1초만큼 재전송 시작 시간을 지연시키기
       },
       retryCondition: (error) => error.response.status === 429, // 서버 혼잡이 일어났을 경우에만 재전송하기
     },

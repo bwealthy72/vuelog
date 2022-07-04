@@ -8,7 +8,7 @@
       <template v-if="post">
         <strong class="category">{{ post.oriCategory }}</strong>
         <h1 class="title">{{ post.title }}</h1>
-        <p class="created">{{ $moment(post.created).format("LLL") }}</p>
+        <p class="created">{{ $moment(post.created).format("LL") }}</p>
         <div class="content" v-html="post.body"></div>
       </template>
       <div v-else class="loader-wrapper">

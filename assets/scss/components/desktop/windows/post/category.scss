@@ -33,8 +33,9 @@
       border: 1px solid transparent;
 
       &:hover {
-        .item__category {
-          color: $key-color;
+        background-color: #414141;
+        .item__img {
+          animation: shake 0.7s ease-in-out 1 alternate;
         }
       }
 

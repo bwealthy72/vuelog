@@ -27,7 +27,6 @@
           @infinite="infiniteHandler"
           spinner="spiral"
           v-if="turnOnInfinite"
-          :identifier="identifierId"
         >
           <div slot="no-more"></div>
           <div slot="no-results"></div>
@@ -46,12 +45,17 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      turnOnInfinite: false,
       identifierId: 0,
     };
   },
   computed: {
-    ...mapState("notion", ["postId", "posts", "category"]),
+    ...mapState("notion", [
+      "postId",
+      "posts",
+      "category",
+      "pageSize",
+      "turnOnInfinite",
+    ]),
     ...mapState("window", ["listWidth"]),
   },
   watch: {
@@ -79,8 +83,11 @@ export default {
   },
 
   mounted() {
-    // 미리 켜지면 client와 server-side render가 다르다는 에러가 나옴
-    this.turnOnInfinite = true;
+    // 일정 이상 적으면 무한 스크롤이 실행됨
+    // hasmore 만드는 것도 고려해봐야함
+    if (this.posts.length >= this.pageSize) {
+      this.$store.commit("notion/setTurnOnInfinite", true);
+    }
   },
 };
 </script>
