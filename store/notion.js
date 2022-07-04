@@ -38,6 +38,7 @@ export const actions = {
   async getPosts({ state, commit }, category) {
     if (isRequesting) return;
     isRequesting = true;
+    commit("setPosts", null);
     commit("setCategory", category);
 
     const data = await this.$axios.$get("/api/posts", {

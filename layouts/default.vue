@@ -29,6 +29,7 @@ export default {
     const timer = setInterval(() => {
       if (this.progress < 90) {
         this.progress += 1;
+      } else {
         clearInterval(this.timer);
       }
     }, 500);
@@ -40,6 +41,9 @@ export default {
         this.$store.commit("loadingEnd");
       }, 500);
     });
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
 };
 </script>
