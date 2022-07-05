@@ -1,5 +1,3 @@
-import shrinkRay from "shrink-ray-current";
-
 export default {
   server: {
     host: "0", // default: localhost
