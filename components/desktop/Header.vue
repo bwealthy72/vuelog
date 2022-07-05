@@ -6,7 +6,7 @@
       alt="logo"
     />
     <p class="desktop-header__title">{{ title }}</p>
-    <!-- <DesktopHeaderIconList /> -->
+    <DesktopHeaderIconList />
     <p class="desktop-header__clock">{{ datetime }}</p>
   </header>
 </template>

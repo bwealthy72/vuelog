@@ -67,15 +67,27 @@ export default {
       currTime: "00:00",
       totalTime: "00:00",
       isPlaying: false,
+      isFirstTime: true,
     };
   },
   computed: {
     ...mapState("notion", ["musics"]),
+    ...mapState("header", ["activatedItem"]),
     isTextLong() {
       return this.musics[this.mIdx].src.length > 16;
     },
   },
   watch: {
+    activatedItem(name) {
+      if (name == "musicPlayer" && this.isFirstTime) {
+        this.audio = new Audio(this.musics[this.mIdx].src);
+        this.audio.ontimeupdate = this.updateTime;
+        this.audio.onloadedmetadata = this.updateTime;
+        this.audio.onended = this.next;
+        this.audio.volume = this.volume / 100;
+        this.isFirstTime = false;
+      }
+    },
     src(v) {
       this.audio.load();
       this.audio.play();
@@ -129,13 +141,6 @@ export default {
   },
   async fetch() {
     await this.$store.dispatch("notion/getMusics");
-  },
-  mounted() {
-    this.audio = new Audio(this.musics[this.mIdx].src);
-    this.audio.ontimeupdate = this.updateTime;
-    this.audio.onloadedmetadata = this.updateTime;
-    this.audio.onended = this.next;
-    this.audio.volume = this.volume / 100;
   },
 };
 </script>
