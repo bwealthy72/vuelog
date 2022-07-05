@@ -137,8 +137,4 @@ export default {
   proxy: {
     "/api": process.env.VERCEL_URL,
   },
-
-  render: {
-    compressor: shrinkRay(),
-  },
 };
