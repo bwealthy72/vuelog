@@ -127,6 +127,5 @@ export default {
   build: {
     parallel: true,
     cache: true,
-    hardSource: true,
   },
 };
