@@ -137,4 +137,23 @@ export default {
   proxy: {
     "/api": process.env.VERCEL_URL,
   },
+
+  // nuxt-ssr-cache
+  version: pkg.version,
+
+  modules: ["nuxt-ssr-cache"],
+  cache: {
+    useHostPrefix: false,
+    pages: ["/"],
+    store: {
+      type: "memory",
+      // maximum number of pages to store in memory
+      // if limit is reached, least recently used page
+      // is removed.
+      max: 100,
+
+      // number of seconds to store this page in cache
+      ttl: 60,
+    },
+  },
 };
