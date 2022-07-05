@@ -82,7 +82,21 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ["@nuxtjs/moment", "@nuxtjs/device"],
+  buildModules: [
+    "@nuxtjs/moment",
+    "@nuxtjs/device",
+    [
+      "nuxt-compress",
+      {
+        gzip: {
+          threshold: 8192,
+        },
+        brotli: {
+          threshold: 8192,
+        },
+      },
+    ],
+  ],
   moment: {
     locales: ["ko"],
   },
