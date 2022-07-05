@@ -108,6 +108,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/content
+    "nuxt-ssr-cache",
     "@nuxtjs/axios",
     "@nuxt/image",
     "@nuxtjs/pwa",
@@ -139,9 +140,7 @@ export default {
   },
 
   // nuxt-ssr-cache
-  version: pkg.version,
 
-  modules: ["nuxt-ssr-cache"],
   cache: {
     useHostPrefix: false,
     pages: ["/"],
