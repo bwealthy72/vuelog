@@ -15,20 +15,7 @@ const deepCopy = function (data) {
   return JSON.parse(JSON.stringify(data));
 };
 
-const cacheControl =
-  (values) =>
-  ({ res }) => {
-    if (!process.server) return;
-
-    const cacheControlValue = Object.entries(values)
-      .map(([key, value]) => `${key}=${value}`)
-      .join(",");
-
-    res.setHeader("Cache-Control", cacheControlValue);
-  };
-
 export default ({ app }, inject) => {
   inject("getScssLength", getScssLength);
   inject("deepCopy", deepCopy);
-  inject("cacheControl", cacheControl);
 };

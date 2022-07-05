@@ -5,6 +5,11 @@
   height: 100%;
   border-right: 1px solid #222;
 
+  &.hide > * {
+    opacity: 0;
+    pointer-events: none;
+  }
+
   &__header {
     height: $window-header-height;
     border-bottom: 1px solid #222;

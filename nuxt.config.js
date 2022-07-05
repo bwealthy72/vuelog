@@ -111,7 +111,6 @@ export default {
     "nuxt-ssr-cache",
     "@nuxtjs/axios",
     "@nuxt/image",
-    "@nuxtjs/pwa",
   ],
 
   image: {
@@ -135,9 +134,9 @@ export default {
     progress: false,
   },
 
-  proxy: {
-    "/api": process.env.VERCEL_URL,
-  },
+  // proxy: {
+  //   "/api": process.env.VERCEL_URL,
+  // },
 
   // nuxt-ssr-cache
 

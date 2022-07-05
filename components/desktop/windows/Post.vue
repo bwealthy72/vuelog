@@ -7,7 +7,7 @@
     :style="{ cursor }"
   >
     <Category />
-    <List />
+    <List :class="{ hide: listWidth < 50 }" />
     <Content />
   </main>
 </template>
@@ -36,6 +36,7 @@ export default {
     },
     mouseMoveHandler(e) {
       const rect = this.$el.getBoundingClientRect();
+
       if (this.resizeMode === "category") {
         const width = e.clientX - rect.left;
         if (width >= 150) {
@@ -43,7 +44,7 @@ export default {
         }
       } else if (this.resizeMode === "list") {
         const width = e.clientX - rect.left - this.categoryWidth;
-        if (width >= 200) {
+        if (width >= 50) {
           this.$store.commit("window/setListWidth", width);
         }
       } else {
