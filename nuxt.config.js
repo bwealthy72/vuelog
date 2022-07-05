@@ -96,6 +96,7 @@ export default {
     // https://go.nuxtjs.dev/content
     "@nuxtjs/axios",
     "@nuxt/image",
+    "@nuxtjs/pwa",
   ],
 
   image: {
@@ -121,5 +122,11 @@ export default {
 
   proxy: {
     "/api": process.env.VERCEL_URL,
+  },
+
+  build: {
+    parallel: true,
+    cache: true,
+    hardSource: true,
   },
 };

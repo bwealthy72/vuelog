@@ -12,6 +12,7 @@
     "@notionhq/client": "^1.0.4",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/moment": "^1.6.1",
+    "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/vercel-builder": "^0.22.1",
     "@vercel/node": "^2.1.0",
     "core-js": "^3.23.1",
