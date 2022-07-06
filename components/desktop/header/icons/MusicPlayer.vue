@@ -1,5 +1,5 @@
 <template>
-  <div class="music-player">
+  <div class="music-player" v-if="musics.length > 0">
     <img class="music-player__bg" :src="musics[mIdx].image" />
     <div class="music-player__info">
       <div class="image" :class="{ playing: isPlaying }">
@@ -78,8 +78,9 @@ export default {
     },
   },
   watch: {
-    activatedItem(name) {
+    async activatedItem(name) {
       if (name == "musicPlayer" && this.isFirstTime) {
+        await this.$store.dispatch("notion/getMusics");
         this.audio = new Audio(this.musics[this.mIdx].src);
         this.audio.ontimeupdate = this.updateTime;
         this.audio.onloadedmetadata = this.updateTime;
@@ -138,9 +139,6 @@ export default {
     trackChange() {
       this.audio.currentTime = (this.audio.duration * this.track) / 100;
     },
-  },
-  async fetch() {
-    await this.$store.dispatch("notion/getMusics");
   },
 };
 </script>
