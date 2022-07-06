@@ -1,6 +1,8 @@
 import mongo from "./utils/mongo";
 import rateLimit from "express-rate-limit";
 
+// TODO: CORS 적용하기
+
 const app = require("express")();
 
 const limiter = rateLimit({
@@ -13,7 +15,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 app.get("/posts", async (req, res) => {
-  let result = null;
+  let result = [];
   try {
     await mongo.connect("notion", "posts");
     result = await mongo.getPosts(
@@ -27,7 +29,7 @@ app.get("/posts", async (req, res) => {
 });
 
 app.get("/posts/next", async (req, res) => {
-  let result = null;
+  let result = [];
   try {
     await mongo.connect("notion", "posts");
     result = await mongo.addPosts();
@@ -39,7 +41,7 @@ app.get("/posts/next", async (req, res) => {
 });
 
 app.get("/post", async (req, res) => {
-  let result = null;
+  let result = {};
   try {
     await mongo.connect("notion", "posts");
 
@@ -51,7 +53,7 @@ app.get("/post", async (req, res) => {
 });
 
 app.get("/categories", async (req, res) => {
-  let result = null;
+  let result = [];
   try {
     await mongo.connect("notion", "categories");
     result = await mongo.getCategories();
@@ -62,7 +64,7 @@ app.get("/categories", async (req, res) => {
 });
 
 app.get("/musics", async (req, res) => {
-  let result = null;
+  let result = [];
   try {
     await mongo.connect("notion", "musics");
     result = await mongo.getMusics();

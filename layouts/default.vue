@@ -14,37 +14,18 @@
     <DesktopHeader />
     <Nuxt />
 
-    <Loading :progress="progress" />
+    <Loading :progress="loading.progress" />
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
-  data() {
-    return {
-      progress: 0,
-    };
+  computed: {
+    ...mapState(["loading"]),
   },
   beforeCreate() {
-    this.timer = setInterval(() => {
-      if (this.progress < 90) {
-        this.progress += 1;
-      } else {
-        clearInterval(this.timer);
-      }
-    }, 500);
-  },
-  mounted() {
-    window.onNuxtReady(() => {
-      this.progress = 100;
-      clearInterval(this.timer);
-      setTimeout(() => {
-        this.$store.commit("loadingEnd");
-      }, 500);
-    });
-  },
-  beforeDestroy() {
-    clearInterval(this.timer);
+    this.$store.dispatch("loadingStart");
   },
 };
 </script>

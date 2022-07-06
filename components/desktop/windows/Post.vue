@@ -27,7 +27,7 @@ export default {
   },
   components: { Category, List, Content },
   computed: {
-    ...mapState("notion", ["posts", "post"]),
+    ...mapState("notion", ["posts", "post", "fetchDone"]),
     ...mapState("window", ["categoryWidth", "listWidth"]),
   },
   methods: {
@@ -76,19 +76,39 @@ export default {
     },
   },
 
-  async fetch() {
-    let category = this.$route.params.category;
+  beforeCreate() {
+    const params = this.$route.params || {};
+    let category = params ? params.category : "";
+    let postId = params ? params.id : null;
     if (!category) category = "";
-    await this.$store.dispatch("notion/getCategories");
-    await this.$store.dispatch("notion/getPosts", category);
-    if (this.$route.params.id) {
-      await this.$store.dispatch("notion/getPost", this.$route.params.id);
-    } else {
-      await this.$store.dispatch(
-        "notion/getPost",
-        this.$store.state.notion.posts[0].id
-      );
-    }
+
+    const self = this;
+    this.$store.dispatch("notion/fetchAll", { category, postId }).then(() => {
+      self.$store.dispatch("loadingEnd");
+    });
+
+    // if (params && params.id) {
+    //   this.$store.dispatch("notion/getPost", params.id).then(() => {
+    //     this.$set(this, "contentDone", true);
+    //   });
+    // }
+
+    // // TODO: fetch API 만들어서 끝나면 로딩 끝 이런 느낌을 만들자....
+
+    // // this.$store.dispatch("notion/getCategories").then(() => {
+    // //   this.$set(this, "categoryDone", true);
+    // // });
+    // this.$store.dispatch("notion/getPosts", category).then(() => {
+    //   this.$set(this, "listDone", true);
+
+    //   if (!params.id) {
+    //     this.$store
+    //       .dispatch("notion/getPost", this.$store.state.notion.posts[0].id)
+    //       .then(() => {
+    //         this.$set(this, "contentDone", true);
+    //       });
+    //   }
+    // });
   },
 };
 </script>

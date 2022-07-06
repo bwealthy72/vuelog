@@ -81,14 +81,6 @@ export default {
       }
     },
   },
-
-  mounted() {
-    // 일정 이상 적으면 무한 스크롤이 실행됨
-    // hasmore 만드는 것도 고려해봐야함
-    if (this.posts.length >= this.pageSize) {
-      this.$store.commit("notion/setTurnOnInfinite", true);
-    }
-  },
 };
 </script>
 

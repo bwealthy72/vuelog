@@ -1,5 +1,3 @@
-let isRequesting = false;
-
 export const state = () => ({
   posts: [],
   post: {},
@@ -8,6 +6,9 @@ export const state = () => ({
   postId: "",
   categories: [],
   musics: [],
+
+  isCategoriesDone: false,
+  isPostsDone: false,
 
   turnOnInfinite: false, // 미리 켜지면 스크롤이 여러번 실행되서 에러가 나옴
   // 미리 켜지면 client와 server-side render가 다르다는 에러가 나옴
@@ -38,12 +39,43 @@ export const mutations = {
   setTurnOnInfinite(state, bool) {
     state.turnOnInfinite = bool;
   },
+  doneCategories(state) {
+    state.isCategoriesDone;
+  },
+  donePosts(state) {
+    state.isPostsDone;
+  },
 };
 
 export const actions = {
+  async fetchAll({ state, commit, rootState }, { category, postId }) {
+    commit("setCategory", category);
+    commit("setPostId", postId);
+
+    if (postId) {
+      await this.$axios
+        .$get("/api/post", {
+          params: {
+            id: postId,
+          },
+        })
+        .then((post) => {
+          commit("setPost", post);
+        });
+    }
+    const categories = await this.$axios.$get("/api/categories");
+    commit("setCategories", categories);
+
+    const posts = await this.$axios.$get("/api/posts", {
+      params: { category, pageSize: state.pageSize },
+    });
+    commit("setPosts", posts);
+
+    const post = this.$axios.$get("/api/post", { params: { id: posts[0].id } });
+    commit("setPost", post);
+  },
+
   async getPosts({ state, commit }, category) {
-    if (isRequesting) return;
-    isRequesting = true;
     commit("setPosts", null);
     commit("setCategory", category);
 
@@ -55,11 +87,13 @@ export const actions = {
     });
 
     commit("setPosts", data);
-    isRequesting = false;
+    // 일정 이상 적으면 무한 스크롤이 실행됨
+    // hasmore 만드는 것도 고려해봐야함
+    if (data.length >= state.pageSize) {
+      commit("setTurnOnInfinite", true);
+    }
   },
   async addPosts({ state, commit }) {
-    if (isRequesting) return;
-    isRequesting = true;
     const data = await this.$axios.$get("/api/posts/next", {
       params: {
         category: state.category,
@@ -70,13 +104,10 @@ export const actions = {
     commit("addPosts", data);
 
     const done = data.length == 0;
-    isRequesting = false;
     return done;
   },
 
   async getPost({ commit }, id) {
-    if (isRequesting) return;
-    isRequesting = true;
     commit("setPost", null);
     commit("setPostId", id);
 
@@ -86,24 +117,16 @@ export const actions = {
       },
     });
     commit("setPost", data);
-    isRequesting = false;
   },
 
-  async getCategories({ commit }, id) {
-    if (isRequesting) return;
-    isRequesting = true;
+  async getCategories({ commit }) {
     const data = await this.$axios.$get("/api/categories");
-
     commit("setCategories", data);
-    isRequesting = false;
   },
 
   async getMusics({ commit }, id) {
-    if (isRequesting) return;
-    isRequesting = true;
     const data = await this.$axios.$get("/api/musics");
 
     commit("setMusics", data);
-    isRequesting = false;
   },
 };

@@ -1,57 +1,65 @@
 <template>
-  <div class="music-player" v-if="musics.length > 0">
-    <img class="music-player__bg" :src="musics[mIdx].image" />
-    <div class="music-player__info">
-      <div class="image" :class="{ playing: isPlaying }">
-        <img :src="musics[mIdx].image" />
-      </div>
-      <h2 class="title">
-        <div class="title__texts" :class="{ playing: isPlaying && isTextLong }">
-          <!-- 글자 무한 반복을 위해 두 개로 만듦 -->
-          <span>{{ musics[mIdx].title }}</span>
-          <span v-show="isTextLong">{{ musics[mIdx].title }}</span>
+  <div class="music-player">
+    <template v-if="musics.length > 0">
+      <img class="music-player__bg" :src="musics[mIdx].image" />
+      <div class="music-player__info">
+        <div class="image" :class="{ playing: isPlaying }">
+          <img :src="musics[mIdx].image" />
         </div>
-      </h2>
-      <p class="artist">{{ musics[mIdx].artist }}</p>
-    </div>
+        <h2 class="title">
+          <div
+            class="title__texts"
+            :class="{ playing: isPlaying && isTextLong }"
+          >
+            <!-- 글자 무한 반복을 위해 두 개로 만듦 -->
+            <span>{{ musics[mIdx].title }}</span>
+            <span v-show="isTextLong">{{ musics[mIdx].title }}</span>
+          </div>
+        </h2>
+        <p class="artist">{{ musics[mIdx].artist }}</p>
+      </div>
 
-    <Slider
-      class="music-player__track"
-      @input="trackChange"
-      v-model="track"
-      :max="99"
-    />
-
-    <div class="music-player__time">
-      <p class="curr-time">{{ currTime }}</p>
-      <p class="total-time">{{ totalTime }}</p>
-    </div>
-
-    <div class="music-player__controller">
-      <button class="btn prev" @click="prev">
-        <img src="~/assets/images/audio/prev.svg" />
-      </button>
-      <button class="btn play" @click="play">
-        <img src="~/assets/images/audio/play.png" v-show="!isPlaying" />
-        <img
-          class="pause-img"
-          src="~/assets/images/audio/pause.png"
-          v-show="isPlaying"
-        />
-      </button>
-      <button class="btn next" @click="next">
-        <img src="~/assets/images/audio/next.svg" />
-      </button>
-    </div>
-
-    <Slider class="music-player__volume" v-model="volume" :size="3">
-      <img src="~/assets/images/audio/mute.svg" alt="mute" slot="preImg" />
-      <img
-        src="~/assets/images/audio/fullsound.svg"
-        alt="full sound"
-        slot="suImg"
+      <Slider
+        class="music-player__track"
+        @input="trackChange"
+        v-model="track"
+        :max="99"
       />
-    </Slider>
+
+      <div class="music-player__time">
+        <p class="curr-time">{{ currTime }}</p>
+        <p class="total-time">{{ totalTime }}</p>
+      </div>
+
+      <div class="music-player__controller">
+        <button class="btn prev" @click="prev">
+          <img src="~/assets/images/audio/prev.svg" />
+        </button>
+        <button class="btn play" @click="play">
+          <img src="~/assets/images/audio/play.png" v-show="!isPlaying" />
+          <img
+            class="pause-img"
+            src="~/assets/images/audio/pause.png"
+            v-show="isPlaying"
+          />
+        </button>
+        <button class="btn next" @click="next">
+          <img src="~/assets/images/audio/next.svg" />
+        </button>
+      </div>
+
+      <Slider class="music-player__volume" v-model="volume" :size="3">
+        <img src="~/assets/images/audio/mute.svg" alt="mute" slot="preImg" />
+        <img
+          src="~/assets/images/audio/fullsound.svg"
+          alt="full sound"
+          slot="suImg"
+        />
+      </Slider>
+    </template>
+    <div v-else class="loader-wrapper">
+      <div class="loader"></div>
+    </div>
   </div>
 </template>
 
