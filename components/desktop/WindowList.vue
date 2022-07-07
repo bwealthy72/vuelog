@@ -172,32 +172,59 @@ export default {
       let w = this.windows[name].w;
       let h = this.windows[name].h;
 
+      let minW = this.windows[name].minW;
+      let minH = this.windows[name].minH;
+
       if (mode === "resize-tl") {
-        x = nx;
-        y = ny;
-        w = r - nx;
-        h = b - ny;
+        if (minW < r - nx) {
+          x = nx;
+          w = r - nx;
+        }
+        if (minH < b - ny) {
+          y = ny;
+          h = b - ny;
+        }
       } else if (mode === "resize-tr") {
-        y = ny;
-        w = nx - l;
-        h = b - ny;
+        if (minH < b - ny) {
+          y = ny;
+          h = b - ny;
+        }
+        if (minW < nx - l) {
+          w = nx - l;
+        }
       } else if (mode === "resize-bl") {
-        x = nx;
-        w = r - nx;
-        h = ny - t;
+        if (minW < r - nx) {
+          x = nx;
+          w = r - nx;
+        }
+        if (minH < ny - t) {
+          h = ny - t;
+        }
       } else if (mode === "resize-br") {
-        w = nx - l;
-        h = ny - t;
+        if (minW < nx - l) {
+          w = nx - l;
+        }
+        if (minH < ny - t) {
+          h = ny - t;
+        }
       } else if (mode === "resize-t") {
-        y = ny;
-        h = b - ny;
+        if (minH < b - ny) {
+          y = ny;
+          h = b - ny;
+        }
       } else if (mode === "resize-b") {
-        h = ny - t;
+        if (minH < ny - t) {
+          h = ny - t;
+        }
       } else if (mode === "resize-l") {
-        x = nx;
-        w = r - nx;
+        if (minW < r - nx) {
+          x = nx;
+          w = r - nx;
+        }
       } else if (mode === "resize-r") {
-        w = nx - l;
+        if (minW < nx - l) {
+          w = nx - l;
+        }
       }
 
       this.$store.commit("window/setRect", { name, x, y, w, h });

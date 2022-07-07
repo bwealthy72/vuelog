@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="loading-page" v-if="!loading.isDone">
+  <div class="loading-page">
     <img
       class="loading-page__image"
       src="~/assets/images/ico-apple.svg"

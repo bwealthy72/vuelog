@@ -110,12 +110,7 @@ export default {
     // https://go.nuxtjs.dev/content
     "nuxt-ssr-cache",
     "@nuxtjs/axios",
-    "@nuxt/image",
   ],
-
-  image: {
-    domains: ["https://s3.us-west-2.amazonaws.com"],
-  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   // env: {

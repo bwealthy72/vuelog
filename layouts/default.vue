@@ -14,7 +14,7 @@
     <DesktopHeader />
     <Nuxt />
 
-    <Loading :progress="loading.progress" />
+    <Loading :progress="loading.progress" v-if="!loading.isDone" />
   </div>
 </template>
 

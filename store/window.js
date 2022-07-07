@@ -16,6 +16,8 @@ export const state = () => ({
       w: 1080,
       h: 700,
       zIndex: 0,
+      minW: 700,
+      minH: 500,
     },
   },
 

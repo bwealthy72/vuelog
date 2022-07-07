@@ -37,10 +37,20 @@ export const mutations = {
 };
 
 export const actions = {
-  async fetch({ state, dispatch }, { category, postId }) {
-    await dispatch("getCategories");
-    await dispatch("getPosts", category);
-    await dispatch("getPost", postId ? postId : state.posts[0].id);
+  async fetch({ state, commit }, { category, id }) {
+    const result = await this.$axios.$get("/api/fetch", {
+      params: {
+        category,
+        pageSize: state.pageSize,
+        currPage: 0,
+        id,
+      },
+    });
+    commit("setCategory", category);
+    commit("setPostId", id ? id : result.posts[0].id);
+    commit("setPosts", result.posts);
+    commit("setPost", result.post);
+    commit("setCategories", result.categories);
   },
   async getPosts({ state, commit }, category) {
     commit("setPosts", []);
@@ -53,7 +63,6 @@ export const actions = {
         currPage: 0,
       },
     });
-
     commit("setPosts", result.data);
   },
   async addPosts({ state, commit }) {

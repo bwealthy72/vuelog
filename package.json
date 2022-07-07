@@ -26,7 +26,6 @@
     "vue-infinite-loading": "^2.4.5"
   },
   "devDependencies": {
-    "@nuxt/image": "^0.7.1",
     "@nuxtjs/device": "^2.1.0",
     "nuxt-compress": "^5.0.0"
   }

@@ -1,4 +1,4 @@
-export default function ({ $axios, app }) {
+export default function ({ $axios, error: nuxtError }) {
   $axios.onRequest((config) => {
     console.log("Making request to " + config.url);
   });
