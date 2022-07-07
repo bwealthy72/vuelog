@@ -1,68 +1,134 @@
 import { MongoClient } from "mongodb";
 
-export default {
-  // db
-  client: null,
-  db: null,
-  collection: null,
+// class Collection {
+//   constructor(col) {
+//     this._col = col;
+//   }
 
-  // notion
-  currPage: 0,
-  pageNum: 5,
-  category: null,
+//   async getPosts(category, pageSize) {
+//     const cursor = await this._col
+//       .find(category ? { category: { $eq: category } } : null)
+//       .project({ body: 0 })
+//       .limit(pageSize);
 
-  async connect(db, collection) {
-    // Connect to cluster
+//     this.currPage = 0;
+//     this.pageSize = pageSize;
+//     this.category = category;
+
+//     const result = await cursor.toArray();
+//     await cursor.close();
+
+//     return result;
+//   }
+
+//   async addPosts() {
+//     const cursor = await this.collection
+//       .find(this.category ? { category: { $eq: this.category } } : null)
+//       .project({ body: 0, _id: 0 })
+//       .skip(++this.currPage * this.pageNum)
+//       .limit(this.pageNum);
+
+//     const result = await cursor.toArray();
+//     await cursor.close();
+
+//     return result;
+//   }
+
+//   async getPost(id) {
+//     const result = await this.collection.findOne({ id });
+//     return result;
+//   }
+
+//   async getCategories() {
+//     const cursor = await this.collection.find().project({ _id: 0 });
+//     const result = await cursor.toArray();
+//     await cursor.close();
+
+//     return result;
+//   }
+
+//   async getMusics() {
+//     const cursor = await this.collection.find().project({ _id: 0 });
+//     const result = await cursor.toArray();
+//     await cursor.close();
+
+//     return result;
+//   }
+// }
+
+class NotionDB {
+  async connect() {
     this.client = new MongoClient(process.env.MONGODB_URI, {});
     await this.client.connect();
-    this.db = this.client.db(db);
-    this.collection = this.db.collection(collection);
-  },
-  async disconnect() {
-    await this.client.close();
-  },
-  async getPosts(category, pageNum) {
-    const cursor = await this.collection
-      .find(category ? { category: { $eq: category } } : null)
-      .project({ body: 0 })
-      .limit(pageNum);
-    this.currPage = 0;
-    this.pageNum = pageNum;
-    this.category = category;
+    this.db = this.client.db("notion");
+  }
 
-    const result = await cursor.toArray();
-    await cursor.close();
+  disconnect() {
+    this.client.close();
+  }
 
+  async run(func) {
+    let result = null;
+    try {
+      await this.connect();
+      result = await func();
+    } finally {
+      this.disconnect();
+    }
     return result;
-  },
-  async addPosts() {
-    const cursor = await this.collection
-      .find(this.category ? { category: { $eq: this.category } } : null)
-      .project({ body: 0, _id: 0 })
-      .skip(++this.currPage * this.pageNum)
-      .limit(this.pageNum);
+  }
 
-    const result = await cursor.toArray();
-    await cursor.close();
+  async getPosts(category, pageSize, currPage) {
+    return await this.run(async () => {
+      const cursor = await this.db
+        .collection("posts")
+        .find(category ? { category: { $eq: category } } : null)
+        .project({ _id: 0, body: 0 })
+        .skip(currPage * pageSize)
+        .limit(pageSize);
 
-    return result;
-  },
+      const data = await cursor.toArray();
+      const result = {
+        data,
+        hasMore: await cursor.hasNext(),
+      };
+      await cursor.close();
+      return result;
+    });
+  }
+
   async getPost(id) {
-    const result = await this.collection.findOne({ id });
-    return result;
-  },
+    return await this.run(async () => {
+      const result = await this.db.collection("posts").findOne({ id });
+      return result;
+    });
+  }
   async getCategories() {
-    const cursor = await this.collection.find().project({ _id: 0 });
-    const result = await cursor.toArray();
-    await cursor.close();
+    return await this.run(async () => {
+      const cursor = await this.db
+        .collection("categories")
+        .find()
+        .project({ _id: 0 });
 
-    return result;
-  },
+      const result = await cursor.toArray();
+      await cursor.close();
+
+      return result;
+    });
+  }
+
   async getMusics() {
-    const cursor = await this.collection.find().project({ _id: 0 });
-    const result = await cursor.toArray();
-    await cursor.close();
+    return await this.run(async () => {
+      const cursor = await this.db
+        .collection("musics")
+        .find()
+        .project({ _id: 0 });
+      const result = await cursor.toArray();
+      await cursor.close();
 
-    return result;
-  },
-};
+      return result;
+    });
+  }
+}
+
+export { NotionDB };

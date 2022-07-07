@@ -24,9 +24,9 @@
         </button>
 
         <infinite-loading
+          v-if="posts.length >= pageSize"
           @infinite="infiniteHandler"
           spinner="spiral"
-          v-if="turnOnInfinite"
         >
           <div slot="no-more"></div>
           <div slot="no-results"></div>
@@ -49,13 +49,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("notion", [
-      "postId",
-      "posts",
-      "category",
-      "pageSize",
-      "turnOnInfinite",
-    ]),
+    ...mapState("notion", ["postId", "posts", "category", "pageSize"]),
     ...mapState("window", ["listWidth"]),
   },
   watch: {
@@ -66,8 +60,8 @@ export default {
   },
   methods: {
     infiniteHandler($state) {
-      this.$store.dispatch("notion/addPosts").then((done) => {
-        if (done) {
+      this.$store.dispatch("notion/addPosts").then((hasMore) => {
+        if (!hasMore) {
           $state.complete();
         } else {
           $state.loaded();

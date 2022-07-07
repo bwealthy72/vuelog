@@ -32,16 +32,11 @@ export default {
   },
   methods: {
     async changeCategory(category) {
-      this.$store.commit("notion/setTurnOnInfinite", false);
       await this.$store.dispatch("notion/getPosts", category);
       await this.$store.dispatch(
         "notion/getPost",
         this.$store.state.notion.posts[0].id
       );
-
-      if (this.posts.length >= this.pageSize) {
-        this.$store.commit("notion/setTurnOnInfinite", true);
-      }
     },
   },
 };

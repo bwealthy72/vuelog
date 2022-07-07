@@ -1,17 +1,12 @@
 export const state = () => ({
   posts: [],
   post: {},
-  pageSize: 10,
+  currPage: 0,
+  pageSize: 7, // Infinite Scroll에서 에러가 나지 않기 위해 창의 세로 크기보다 많도록 해야함.
   category: "",
   postId: "",
   categories: [],
   musics: [],
-
-  isCategoriesDone: false,
-  isPostsDone: false,
-
-  turnOnInfinite: false, // 미리 켜지면 스크롤이 여러번 실행되서 에러가 나옴
-  // 미리 켜지면 client와 server-side render가 다르다는 에러가 나옴
 });
 
 export const mutations = {
@@ -36,97 +31,65 @@ export const mutations = {
   setPostId(state, id) {
     state.postId = id;
   },
-  setTurnOnInfinite(state, bool) {
-    state.turnOnInfinite = bool;
-  },
-  doneCategories(state) {
-    state.isCategoriesDone;
-  },
-  donePosts(state) {
-    state.isPostsDone;
+  setCurrPage(state, page) {
+    state.currPage = page;
   },
 };
 
 export const actions = {
-  async fetchAll({ state, commit, rootState }, { category, postId }) {
-    commit("setCategory", category);
-    commit("setPostId", postId);
-
-    if (postId) {
-      await this.$axios
-        .$get("/api/post", {
-          params: {
-            id: postId,
-          },
-        })
-        .then((post) => {
-          commit("setPost", post);
-        });
-    }
-    const categories = await this.$axios.$get("/api/categories");
-    commit("setCategories", categories);
-
-    const posts = await this.$axios.$get("/api/posts", {
-      params: { category, pageSize: state.pageSize },
-    });
-    commit("setPosts", posts);
-
-    const post = this.$axios.$get("/api/post", { params: { id: posts[0].id } });
-    commit("setPost", post);
+  async fetch({ state, dispatch }, { category, postId }) {
+    await dispatch("getCategories");
+    await dispatch("getPosts", category);
+    await dispatch("getPost", postId ? postId : state.posts[0].id);
   },
-
   async getPosts({ state, commit }, category) {
-    commit("setPosts", null);
+    commit("setPosts", []);
     commit("setCategory", category);
 
-    const data = await this.$axios.$get("/api/posts", {
+    const result = await this.$axios.$get("/api/posts", {
       params: {
         category,
         pageSize: state.pageSize,
+        currPage: 0,
       },
     });
 
-    commit("setPosts", data);
-    // 일정 이상 적으면 무한 스크롤이 실행됨
-    // hasmore 만드는 것도 고려해봐야함
-    if (data.length >= state.pageSize) {
-      commit("setTurnOnInfinite", true);
-    }
+    commit("setPosts", result.data);
   },
   async addPosts({ state, commit }) {
-    const data = await this.$axios.$get("/api/posts/next", {
+    const result = await this.$axios.$get("/api/posts", {
       params: {
         category: state.category,
         pageSize: state.pageSize,
+        currPage: state.currPage + 1,
       },
     });
 
-    commit("addPosts", data);
+    commit("setCurrPage", state.currPage + 1);
+    commit("addPosts", result.data);
 
-    const done = data.length == 0;
-    return done;
+    return result.hasMore;
   },
 
   async getPost({ commit }, id) {
     commit("setPost", null);
     commit("setPostId", id);
 
-    const data = await this.$axios.$get("/api/post", {
-      params: {
-        id,
-      },
-    });
-    commit("setPost", data);
+    commit(
+      "setPost",
+      await this.$axios.$get("/api/post", {
+        params: {
+          id,
+        },
+      })
+    );
   },
 
   async getCategories({ commit }) {
-    const data = await this.$axios.$get("/api/categories");
-    commit("setCategories", data);
+    commit("setCategories", await this.$axios.$get("/api/categories"));
   },
 
   async getMusics({ commit }, id) {
-    const data = await this.$axios.$get("/api/musics");
-
-    commit("setMusics", data);
+    commit("setMusics", await this.$axios.$get("/api/musics"));
   },
 };

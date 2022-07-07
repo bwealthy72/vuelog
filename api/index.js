@@ -1,10 +1,8 @@
-import mongo from "./utils/mongo";
 import rateLimit from "express-rate-limit";
+import { NotionDB } from "./utils/mongo";
 
 // TODO: CORS 적용하기
-
 const app = require("express")();
-
 const limiter = rateLimit({
   windowMs: 5 * 1000, // 5초마다 리셋
   max: 12,
@@ -13,64 +11,36 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-
 app.get("/posts", async (req, res) => {
-  let result = [];
-  try {
-    await mongo.connect("notion", "posts");
-    result = await mongo.getPosts(
-      req.query.category,
-      parseInt(req.query.pageSize)
-    );
-  } finally {
-    await mongo.disconnect();
-  }
-  res.json(result);
-});
+  const db = new NotionDB();
 
-app.get("/posts/next", async (req, res) => {
-  let result = [];
-  try {
-    await mongo.connect("notion", "posts");
-    result = await mongo.addPosts();
-  } finally {
-    await mongo.disconnect();
-  }
+  const result = await db.getPosts(
+    req.query.category,
+    parseInt(req.query.pageSize),
+    parseInt(req.query.currPage)
+  );
 
   res.json(result);
 });
 
 app.get("/post", async (req, res) => {
-  let result = {};
-  try {
-    await mongo.connect("notion", "posts");
+  const db = new NotionDB();
+  const result = await db.getPost(req.query.id);
 
-    result = await mongo.getPost(req.query.id);
-  } finally {
-    await mongo.disconnect();
-  }
   res.json(result);
 });
 
 app.get("/categories", async (req, res) => {
-  let result = [];
-  try {
-    await mongo.connect("notion", "categories");
-    result = await mongo.getCategories();
-  } finally {
-    await mongo.disconnect();
-  }
+  const db = new NotionDB();
+  const result = await db.getCategories();
+
   res.json(result);
 });
 
 app.get("/musics", async (req, res) => {
-  let result = [];
-  try {
-    await mongo.connect("notion", "musics");
-    result = await mongo.getMusics();
-  } finally {
-    await mongo.disconnect();
-  }
+  const db = new NotionDB();
+  const result = await db.getMusics();
+
   res.json(result);
 });
 

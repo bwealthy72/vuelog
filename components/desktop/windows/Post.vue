@@ -83,7 +83,7 @@ export default {
     if (!category) category = "";
 
     const self = this;
-    this.$store.dispatch("notion/fetchAll", { category, postId }).then(() => {
+    this.$store.dispatch("notion/fetch", { category, postId }).then(() => {
       self.$store.dispatch("loadingEnd");
     });
 
