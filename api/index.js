@@ -4,21 +4,24 @@ import { NotionDB } from "./utils/mongo";
 console.log("Server Initializing...");
 
 // TODO: CORS 적용하기
+const cors = require("cors"); //use this
 const app = require("express")();
+
 const limiter = rateLimit({
-  windowMs: 60 * 1000, // 너무 많은 요청시 60초 기다리고 실행
-  max: 15,
-  delayMs: 500,
+  windowMs: 3 * 1000, // 3초 기다림
+  max: 8, // 5번까지만
+  delayMs: 500, // 0.5초에 한번 요청
   standardHeaders: true,
   legacyHeaders: false,
   handler(req, res) {
     res.status(this.statusCode).json({
-      code: this.statusCode,
       message: "1분에 15번 0.5초씩 요청가능",
     });
   },
 });
+
 app.use(limiter);
+app.use(cors());
 
 app.get("/fetch", async (req, res) => {
   const db = new NotionDB();
@@ -30,7 +33,7 @@ app.get("/fetch", async (req, res) => {
     req.query.id
   );
 
-  res.json(result);
+  res.status(200).json(result);
 });
 
 app.get("/posts", async (req, res) => {
