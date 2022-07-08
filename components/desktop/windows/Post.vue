@@ -7,7 +7,7 @@
     :style="{ cursor }"
   >
     <Category />
-    <List :class="{ hide: listWidth < 50 }" />
+    <List :class="{ hide: listWidth < 100 }" />
     <Content />
   </main>
 </template>
@@ -39,13 +39,15 @@ export default {
 
       if (this.resizeMode === "category") {
         const width = e.clientX - rect.left;
-        if (width >= 150) {
+        if (width >= 170) {
           this.$store.commit("window/setCategoryWidth", width);
         }
       } else if (this.resizeMode === "list") {
         const width = e.clientX - rect.left - this.categoryWidth;
-        if (width >= 50) {
+        if (width >= 100) {
           this.$store.commit("window/setListWidth", width);
+        } else {
+          this.$store.commit("window/setListWidth", 10);
         }
       } else {
         const mode = this.getMouseMode(e);
@@ -86,29 +88,6 @@ export default {
     this.$store.dispatch("notion/fetch", { category, postId }).then(() => {
       self.$store.dispatch("loadingEnd");
     });
-
-    // if (params && params.id) {
-    //   this.$store.dispatch("notion/getPost", params.id).then(() => {
-    //     this.$set(this, "contentDone", true);
-    //   });
-    // }
-
-    // // TODO: fetch API 만들어서 끝나면 로딩 끝 이런 느낌을 만들자....
-
-    // // this.$store.dispatch("notion/getCategories").then(() => {
-    // //   this.$set(this, "categoryDone", true);
-    // // });
-    // this.$store.dispatch("notion/getPosts", category).then(() => {
-    //   this.$set(this, "listDone", true);
-
-    //   if (!params.id) {
-    //     this.$store
-    //       .dispatch("notion/getPost", this.$store.state.notion.posts[0].id)
-    //       .then(() => {
-    //         this.$set(this, "contentDone", true);
-    //       });
-    //   }
-    // });
   },
 };
 </script>

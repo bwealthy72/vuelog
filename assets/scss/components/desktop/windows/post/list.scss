@@ -5,9 +5,12 @@
   height: 100%;
   border-right: 1px solid #222;
 
-  &.hide > * {
-    opacity: 0;
-    pointer-events: none;
+  &.hide {
+    background-color: #343637;
+    transition: all 0.2s;
+    > * {
+      display: none;
+    }
   }
 
   &__header {
