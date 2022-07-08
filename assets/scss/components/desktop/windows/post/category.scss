@@ -5,6 +5,39 @@
   border-right: 1px solid #222;
   box-sizing: border-box;
 
+  &.small {
+    transition: all 0.2s;
+    background-color: #343637;
+    border-color: transparent;
+
+    .post-category {
+      &__title {
+        display: none;
+      }
+
+      &__list {
+        .item {
+          padding: 0.2rem;
+          margin-bottom: 1.5rem;
+          &.active {
+            background-color: transparent;
+            filter: drop-shadow(0 0 8px white);
+          }
+          &:hover {
+            background-color: transparent;
+          }
+
+          &__category {
+            display: none;
+          }
+          &__count {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
   &__title {
     font-size: 1.2rem;
     color: gray;

@@ -28,10 +28,13 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState("notion", ["categories", "category", "pageSize", "posts"]),
-    ...mapState("window", ["categoryWidth"]),
+    ...mapState("window", ["categoryWidth", "listWidth"]),
   },
   methods: {
     async changeCategory(category) {
+      if (this.listWidth <= 10) {
+        this.$store.commit("window/setListWidth", 350);
+      }
       await this.$store.dispatch("notion/getPosts", category);
       await this.$store.dispatch(
         "notion/getPost",

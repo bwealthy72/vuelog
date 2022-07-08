@@ -8,8 +8,19 @@
   &.hide {
     background-color: #343637;
     transition: all 0.2s;
-    > * {
+    border-color: transparent;
+
+    .item {
       display: none;
+    }
+
+    .post-list__header {
+      border-color: transparent;
+    }
+    .post-list__body {
+      border-left: 1px solid #434343;
+      background-color: #343637;
+      padding: 0;
     }
   }
 

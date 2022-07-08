@@ -6,7 +6,7 @@
     @mouseup="mouseUpHandler"
     :style="{ cursor }"
   >
-    <Category />
+    <Category :class="{ small: categoryWidth < 150 }" />
     <List :class="{ hide: listWidth < 100 }" />
     <Content />
   </main>
@@ -39,8 +39,10 @@ export default {
 
       if (this.resizeMode === "category") {
         const width = e.clientX - rect.left;
-        if (width >= 170) {
+        if (width >= 150) {
           this.$store.commit("window/setCategoryWidth", width);
+        } else {
+          this.$store.commit("window/setCategoryWidth", 50);
         }
       } else if (this.resizeMode === "list") {
         const width = e.clientX - rect.left - this.categoryWidth;
