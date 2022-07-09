@@ -83,10 +83,13 @@ export default {
   beforeCreate() {
     const params = this.$route.params || {};
     let category = params ? params.category : "";
+    if (category == "all") category = "";
     let postId = params ? params.id : null;
     if (!category) category = "";
 
     const self = this;
+    console.log("FETCH dispatch(" + category + " / " + postId + ")");
+
     this.$store.dispatch("notion/fetch", { category, postId }).then(() => {
       self.$store.dispatch("loadingEnd");
     });

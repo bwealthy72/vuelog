@@ -69,7 +69,7 @@ export default {
   data() {
     return {
       track: 0,
-      volume: 10,
+      volume: 30,
       mIdx: 0,
       audio: null,
       currTime: "00:00",

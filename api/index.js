@@ -30,7 +30,7 @@ app.get("/fetch", async (req, res) => {
     req.query.category,
     parseInt(req.query.pageSize),
     parseInt(req.query.currPage),
-    req.query.id
+    req.query.postId
   );
 
   res.status(200).json(result);

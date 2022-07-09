@@ -1,6 +1,6 @@
 <template>
   <section class="app-list">
-    <div class="app" v-for=""></div>
+    <div class="app" v-for="(app, name) in windows"></div>
   </section>
 </template>
 

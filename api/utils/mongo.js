@@ -16,6 +16,8 @@ class NotionDB {
     try {
       await this.connect();
       result = await func();
+    } catch (e) {
+      console.error("문제 발생", e);
     } finally {
       this.disconnect();
     }

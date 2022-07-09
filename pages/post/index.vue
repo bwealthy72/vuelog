@@ -1,3 +1,6 @@
 <template>
-  <DesktopWindowList />
+  <div>
+    <DesktopWindowList v-if="$device.isDesktop" />
+    <MobileAppList v-else />
+  </div>
 </template>

@@ -5,6 +5,7 @@
         :name="name"
         v-if="w.opened"
         v-show="w.opened && !w.minimized"
+        :key="name"
       >
         <component :is="name" />
       </DesktopWindow>
@@ -14,14 +15,10 @@
 
 <script>
 import Post from "@/components/desktop/windows/Post";
-import Post1 from "@/components/desktop/windows/Post";
-import Post2 from "@/components/desktop/windows/Post";
 import { mapState } from "vuex";
 export default {
   components: {
     Post,
-    Post1,
-    Post2,
   },
   data() {
     return {

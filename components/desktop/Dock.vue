@@ -29,7 +29,7 @@ export default {
       ],
       aniID: null,
       minWidth: 0,
-      speed: 0.06, // 0 ~ 1
+      speed: 0.08, // 0 ~ 1
       moveTimer: null, // for throttling
       leaveTimer: null, // for
     };
